@@ -1,0 +1,36 @@
+<% let topPosts = []; 
+  function getFirstFour(arr) {
+    return arr.slice(0, 4);
+  }
+  (theme?.topArticles || []).forEach(path=>{ 
+    const post = site.posts.findOne({ source: path }); 
+    if(post){ topPosts.push(post) } 
+  }) 
+  topPosts = getFirstFour(topPosts);
+%>
+<div id="top-posts">
+  <% topPosts.forEach(post => { %>
+  <a class="post-item" href="<%=url_for(post.path)%>">
+    <div class="item-body">
+      <div class="cover-img">
+        <img src="<%=post.thumbnail || post.cover%>" alt="" />
+      </div>
+      <div class="title-excerpt">
+        <div class="title"><%=post.title%><% if (post.subTitle) { %><span class="sub-title"><%=post.subTitle%></span><% } %></div>
+        <div class="excerpt"><%=post?.excerpt||''%></div>
+        <div class="post-meta">
+          <time class="date" datetime="<%=post.date.toJSON()%>">
+            <%=getPostDate(post)%>
+          </time>
+          <span class="categories">
+            <% (post?.categories || []).forEach(category => { %>
+            <span class="category-item"><%=category.name%></span>
+            <% }); %>
+          </span>
+          <span class="read-time"><%-partial('partials/words', { post, count: false, readTime: true })%></span>
+        </div>
+      </div>
+    </div>
+  </a>
+  <% }); %>
+</div>

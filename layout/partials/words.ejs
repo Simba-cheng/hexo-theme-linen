@@ -1,0 +1,33 @@
+<%
+  const content = post.content || "";
+  const text = content
+    .replace(/<figure[^>]*>.*?<\/figure>/gs, "")
+    .replace(/<span class=\"pswp-caption-content\">.*?<\/span>/gs, "")
+    .replace(/<noscript[^>]*>.*?<\/noscript>/gs, "")
+    .replace(/<style[^>]*>.*?<\/style>/gs, "")
+    .replace(/<script[^>]*>.*?<\/script>/gs, "")
+    .replace(/<\/?[^>]+(>|$)/g, "")
+  
+  const currentLanguage = page?.language || config?.language;
+  const comma = currentLanguage === 'en' ? ', ' : '，'
+  const words = (currentLanguage === 'en'? text?.split(' ')?.length : text?.trim()?.replace(/[\s\t\n]/g, '')?.length) || 0;
+  const photos = content.match(/class="gallery-item/gi, '')?.length || 0;
+  let res = [];
+  let smallRes = [];
+  if(count && (words || photos)) {
+    res = [__('common.approximately'), ' ', ...(words ? [words, __('common.words')] : []), words && photos ? comma : '', ...(photos ? [photos, photos > 1 ? __('common.photos') : __('common.photo')]: [])].filter(item=>item);
+  }
+  if(readTime) {
+    res = res.concat([res.length ? comma : __('common.approximately'), estimateReadingTime(text, photos, content), __('common.minsRead')])
+  }
+  if(count && readTime) {
+    res = [__('common.approximately'), estimateReadingTime(text, photos, content), __('common.minsRead')].filter(item=>item);
+    smallRes = words ? ['(', ...(words ? [words, __('common.words')] : []), words && photos ? comma : '', ...(photos ? [photos, photos > 1 ? __('common.photos') : __('common.photo')]: []), ')'].filter(item=>item) : [];
+  }
+%>
+<% res.forEach(function(item) { %>
+  <span><%= item %></span>
+<% }); %>
+<% smallRes.forEach(function(item) { %>
+  <small><%= item %></small>
+<% }); %>

@@ -1,0 +1,130 @@
+<% 
+const version = theme.version;
+%>
+
+<% 
+  var tocs = is_post() ? extractTocFromHtml(page.content) : null;
+  var series = is_post() ? site.posts.filter(item=>item.series && item.series === page?.series).sort('date', -1) : []
+%>
+
+<!DOCTYPE html>
+<html lang="<%=page.language || config.language%>">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title><%=getPageTitle()%></title>
+  <link rel="icon" type="image/x-icon" href="<%=theme?.icon ?? '/favicon.svg'%>" />
+  <meta name="referrer" content="no-referrer-when-downgrade" />
+  <% if (page.hide && page.hide.seo) { %>
+  <meta name="robots" content="noindex, nofollow">
+  <% } %>
+  <meta name="description" content="<%=page?.excerpt||config?.description||''%>" />
+  <%-partial('partials/share-meta')%> <% if (theme.stylesheets !== undefined
+    && theme.stylesheets.length > 0) { %>
+  <% if (is_post()) { %>
+  <link rel="stylesheet" href="/css/linkcard.css?v=<%=version%>" />
+  <% } %>
+  <!-- stylesheets list from _config.yml -->
+  <% theme.stylesheets.forEach(url => { %>
+  <link rel="stylesheet" href="<%=url%>?v=<%=version%>" />
+  <% }); %> <% } %>
+  <% if (theme?.lazyload?.enable ?? true) { %>
+  <link rel="stylesheet" href="/css/lazyload.css?v=<%=version%>" />
+  <% } %>
+  <% if (theme?.heads) { %>
+  <% theme?.heads.forEach(head => { %>
+  <%-head%>
+  <% }); %>
+  <% } %>
+  <% if (page?.heads) { %>
+  <% page.heads.forEach(head => { %>
+  <%-head%>
+  <% }); %>
+  <% } %>
+</head>
+
+<body>
+  <div id="page-top"></div>
+  <%-partial('partials/header', {
+      hasTocs: page?.toc ?? !!tocs?.length
+    })%> <% if (is_post()) { %>
+  <div class="banner-bg"></div>
+  <% } %>
+  <div id="safe-area-test" style="position: fixed; bottom: 0; height: env(safe-area-inset-bottom);"></div>
+  <div class="page-body">
+    <div class="side-content">
+      <% if (page?.toc !== false && tocs?.length) { %>
+      <div id="toc" class="toc<%=page.tocType === 'flat' ? ' flat' : ''%>">
+        <div class="toc-title"></div>
+        <div class="toc-items">
+          <% tocs.forEach((toc, index) => { %>
+          <div class="toc-item-wrap<%-index ===0 ? ' active': ''%>">
+            <a class="toc-item-link" data-id="<%-toc.id%>" href="#<%-toc.id%>"><%-toc.title%></a>
+            <% if(toc?.children?.length) { %>
+            <ul class="toc-sub-item-wrap">
+              <% toc.children.forEach(subItem => { %>
+              <li><a class="toc-sub-item-link" data-id="<%-subItem.id%>" href="#<%-subItem.id%>"><%-subItem.title%></a></li>
+              <% }); %>
+            </ul>
+            <% }; %>
+          </div>
+          <% }); %>
+        </div>
+      </div>
+      <% } %>
+    </div>
+    <div class="side-content">
+      <% if (series.length) { %>
+      <div class="post-series">
+        <a class="series-title" href="<%='/series/' + page.series + '/'%>"><%=__('common.series')%>-<%=page.series%></a>
+        <div class="series-items">
+          <% take(series, 50).forEach((item, index) => { %>
+          <a class="series-item-link<%-item.source === page.source ? ' active': ''%>" href="<%=url_for(item.path)%>"><%-`${item.title}`%><% if (item.subTitle) { %><span class="sub-title"><%=item.subTitle%></span><% } %></a>
+          <% }); %>
+          <% if(series.length > 50) { %>
+          <a class="series-item-link view-more" href="<%='/series/' + page.series + '/'%>"><%-`${__('common.total')} ${series.length} ${__('common.seriesPostCountShort')}`%></a>
+          <% } %>
+        </div>
+      </div>
+      <% } %>
+    </div>
+    <div id="content-outer" class="<%= is_post() ? 'post-outer' : page.seriesInfo?.cover ? 'series-outer': '' %>">
+      <div id="content-inner">
+        <%- body %>
+      </div>
+    </div>
+  </div>
+
+  <%-partial('partials/footer')%>
+  <div id="mask"></div>
+  <a id="back-to-top" href="#page-top" title="back to top"></a>
+  <noscript id="noscript-styles"></noscript>
+  <% if(is_post()) { %>
+  <script src="/js/toc.js?v=<%=version%>" defer></script>
+  <% } %>
+  <% if (theme.scripts !== undefined && theme.scripts.length > 0) { %>
+  <!-- scripts list from theme config.yml -->
+  <% theme.scripts.forEach(url => { %>
+  <script src="<%=url%>?v=<%=version%>"></script>
+  <% }); %>
+  <% } %>
+  <% if (theme?.lazyload?.enable ?? true) { %>
+  <script src="/js/lazyload.js?v=<%=version%>"></script>
+  <% } %>
+  <% if (page.hdrAssetsPrefix) { %>
+  <script>
+    var hdrAssetsPrefix = "<%-page.hdrAssetsPrefix%>"
+  </script>
+  <% } %>
+  <% if (page.hdrSwitch) { %>
+  <script src="/js/hdr.js?v=<%=version%>"></script>
+  <% } %>
+  <% if (theme?.appends?.length > 0) { %>
+  <% theme.appends.forEach(appendItem => { %>
+  <%-appendItem%>
+  <% }); %>
+  <% } %>
+</body>
+
+</html>

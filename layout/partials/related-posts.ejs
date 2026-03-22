@@ -1,0 +1,33 @@
+<% 
+const tags = page.tags.data.map(tag=>tag.name);
+const relatedPosts = site.posts.filter(item=>item.source !== page.source).filter((item) => {
+  let count = 0;
+  const itemTags = item.tags.data.map(tag=>tag.name);
+  (tags).forEach((tag) => {
+    if(itemTags.includes(tag)){
+      count ++;
+    }
+  });
+  return count >=2;
+}).sort('date', -1).limit(3);
+%>
+<% if (page?.showRelated !== false && relatedPosts.length > 0) { %>
+<div id="related-posts">
+  <div class="related-posts-title"><%=__('common.relatedPosts')%></div>
+  <% relatedPosts.each(post => { 
+      const coverImg = post.thumbnail || post.cover || '/img/related-post.jpg'
+      %>
+  <a href="<%=url_for(post.path)%>">
+    <div class="shared-link">
+      <div class="cover-img">
+        <img no-lazy class="not-gallery-item" src="<%=coverImg%>" alt="" loading="lazy">
+      </div>
+      <div class="link-content">
+        <span class="link-title"><%=post.title%></span>
+        <span class="link-desc"><%-post?.excerpt||''%></span>
+      </div>
+    </div>
+  </a>
+  <% }); %>
+</div>
+<% } %>

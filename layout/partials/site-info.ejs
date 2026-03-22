@@ -1,0 +1,24 @@
+<%
+const series = Array.from(new Set(site.posts.filter(item=>item.series).sort('date', -1).map(item=>item.series)))
+%>
+<div class="site-info<%=is_home_first_page() ? ' home' : ''%>">
+  <div class="info-row">
+    <div class="author">
+      <img class="avatar" src="<%=theme?.info?.avatar || '/img/vue-color-avatar.png'%>" alt="" />
+      <div class="name"><%=config?.author || ''%></div>
+    </div>
+  </div>
+  <% if (theme?.info?.site_desc) { %>
+    <div class="info-row description"><%=theme?.info?.site_desc%></div>
+  <% } %>
+  <div class="info-row site-statisc">
+    <a href="/archives/#posts" target="_self"><%=site.posts?.filter(post=>!post?.hide?.archive).length%> <%=__('common.posts')%></a>
+    <span class="divider">/</span>
+    <a href="/archives/#categories" target="_self"><%=site.categories.length%> <%=__('common.categories')%></a>
+    <span class="divider">/</span>
+    <a href="/archives/#tags" target="_self"><%=site.tags.length%> <%=__('common.tags')%></a>
+    <% if (series.length) { %>
+    <span class="divider">/</span>
+    <a href="/archives/#series" target="_self"><%=series.length%> <%=__('common.series')%></a><% } %>
+  </div>
+</div>

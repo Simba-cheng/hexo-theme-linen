@@ -1,0 +1,59 @@
+<div class="series-layout">
+  <% if (page.seriesInfo?.cover) { %>
+  <div class="series-cover-img-wrap" style="<%=page.seriesInfo?.coverPlaceholder ? `background-image: url(${page.seriesInfo?.coverPlaceholder})`: ''%>">
+    <div class="series-cover-img-placeholder"></div>
+    <script>
+      const coverImgStartTime = Date.now();
+      setTimeout(() => {
+        const seriesCoverImg = document.getElementById('seriesCoverImg');
+        if (seriesCoverImg && (!seriesCoverImg.classList.contains('loaded') || seriesCoverImg.classList.contains('cached'))) {
+          seriesCoverImg.classList.add('loading')
+        }
+      }, 100);
+
+      function onseriesCoverImgLoaded(img) {
+        if (Date.now() - coverImgStartTime > 300) {
+          img.classList.add('loaded')
+        } else {
+          img.classList.add('cached')
+        }
+      }
+    </script>
+    <img id="seriesCoverImg" class="cover-img" src="<%=page.seriesInfo.cover%>" alt="" onload="onseriesCoverImgLoaded(this)" />
+    <div class="cover-info">
+      <div class="series-info">
+        <h1 class="series-name"><%=__('common.series') + ': ' + page.series %></h1>
+        <div class="description"><%=page.seriesInfo.description||''%> <i class="post-count-icon"></i><%=__('common.total')%> <%=page?.seriesPosts?.length%> <%=__('common.seriesPostCount')%></div>
+      </div>
+      <% if(page.seriesInfo?.coverInfo) { %>
+      <% if(page.seriesInfo.coverInfo.url) { %>
+      <a class="copyright link" href="<%=page.seriesInfo.coverInfo.url%>" target="_blank">
+        <% } else { %>
+        <div class="copyright">
+          <% } %>
+          <span class="icon<%=page.seriesInfo.coverInfo.location? ' location': ''%>"></span>
+          <span class="text"><%=page.seriesInfo.coverInfo.author||page.seriesInfo.coverInfo.location%></span>
+          <% if(page.seriesInfo.coverInfo.url) { %>
+      </a>
+      <% } else { %>
+    </div>
+    <% } %>
+  </div>
+  <% } %>
+</div>
+<% } else { %>
+<h1><%=__('common.series') + ': ' + page.series %></h1>
+<% if (page?.seriesInfo?.description) { %>
+<div class="series-description"><%=page.seriesInfo.description||''%> <i class="post-count-icon"></i><%=__('common.total')%> <%=page?.seriesPosts?.length%> <%=__('common.seriesPostCount')%></div>
+<% } %>
+<% } %>
+<div class="posts-info-layout">
+  <div class="posts-wrap">
+    <div id="recent-posts">
+      <% page.seriesPosts.forEach(post => { %>
+      <%-partial('partials/post-item', { post: post })%> <% }) %>
+    </div>
+  </div>
+  <div class="info-wrap"><%-partial('partials/site-info')%></div>
+</div>
+</div>

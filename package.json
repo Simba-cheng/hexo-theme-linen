@@ -1,0 +1,38 @@
+{
+  "name": "hexo-theme-linen",
+  "version": "1.0.2",
+  "description": "A clean Hexo theme",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "hexo",
+    "theme",
+    "blog",
+    "clean"
+  ],
+  "author": "Lynan",
+  "license": "MIT",
+  "dependencies": {
+    "hexo": "^8.1.1",
+    "hexo-util": "^4.0.0",
+    "hexo-pagination": "^4.0.0",
+    "hexo-renderer-ejs": "^2.0.0",
+    "moment": "^2.30.1",
+    "hexo-renderer-dartsass": "^1.1.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "layout/",
+    "scripts/",
+    "source/",
+    "languages/",
+    "index.js",
+    "package.json",
+    "_config.yml",
+    "README.md"
+  ]
+}

@@ -1,0 +1,11 @@
+<% if (is_home_first_page()) { %> <%-partial('partials/top-posts')%> <% } %>
+
+<div class="posts-info-layout">
+  <div class="posts-wrap">
+    <% if (is_home_first_page()) { %>
+    <div class="section-title"><%=__('common.latest')%></div>
+    <% } %> <%-partial('partials/recent-posts', { showHidden: false })%>
+    <%-partial('partials/paginator')%>
+  </div>
+  <div class="info-wrap"><%-partial('partials/site-info')%></div>
+</div>

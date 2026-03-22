@@ -1,0 +1,5 @@
+<% if (page.total > 1) { %>
+<div id="paginator">
+  <%-paginator({ prev_text: __('common.prev'), next_text: __('common.next')})%>
+</div>
+<% } %>

@@ -1,0 +1,368 @@
+<% if (page.cover) { %>
+<div class="post-cover-img-wrap">
+  <div class="post-cover-img-placeholder"></div>
+  <div class="post-cover-img-placeholder-after"></div>
+  <script>
+    const coverImgStartTime = performance.now();
+    setTimeout(() => {
+      const postCoverImg = document.getElementById('postCoverImg');
+      if (postCoverImg && (!postCoverImg.classList.contains('loaded') || postCoverImg.classList.contains('cached'))) {
+        postCoverImg.classList.add('loading')
+      }
+    }, 100);
+
+    function onPostCoverImgLoaded(img) {
+      if (performance.now() - coverImgStartTime > 300) {
+        img.classList.add('loaded')
+      } else {
+        img.classList.add('cached')
+      }
+    }
+  </script>
+  <img id="postCoverImg" class="cover-img" src="<%=page.cover%>" alt="" onload="onPostCoverImgLoaded(this)" />
+  <% if(page.coverInfo) { %>
+  <div class="cover-info">
+    <% if(page.coverInfo.url) { %>
+    <a class="copyright link" href="<%=page.coverInfo.url%>" target="_blank">
+      <% } else { %>
+      <div class="copyright">
+        <% } %>
+        <span class="icon<%=page.coverInfo.location? ' location': ''%>"></span>
+        <span class="text"><%=page.coverInfo.author||page.coverInfo.location%></span>
+        <% if(page.coverInfo.url) { %>
+    </a>
+    <% } else { %>
+  </div>
+  <% } %>
+</div>
+<% } %>
+</div>
+<% } %>
+
+<article id="post" class="article">
+  <h1 class="post-title"><%=page.title%><% if (page.subTitle) { %><span class="sub-title"><%=page.subTitle%></span><% } %></h1>
+  <div class="post-meta">
+    <% if (page.date && !date(page.date).startsWith('1970')) { %>
+    <time class="date" datetime="<%=page.date.toJSON()%>">
+      <%=getPostDate(page)%>
+    </time>
+    <% } %>
+    <% if (page?.categories?.length) { %>
+      <div class="categories">
+        <% (page?.categories || []).forEach(category => { %>
+        <a class="category-item" href="<%='/'+category.path%>"><%=category.name%></a>
+        <% }); %>
+      </div>
+    <% } %>
+    <div class="read-time"><%-partial('partials/words', { post: page, count: page?.readTime?.count ?? true, readTime: true })%></div>
+    <div class="page-pv"><%=__('common.reads')%><span id="busuanzi_value_page_pv"></span></div>
+    <% if (page.appendRawMarkdown) { %>
+      <div id="content-switch" data-rawcontentlabel="<%-__('common.switchTo')+__('common.rawMarkdownContent')%>" data-renderedcontentlabel="<%-__('common.switchTo')+__('common.renderedContent')%>"><%-__('common.switchTo')+__('common.rawMarkdownContent')%></div>
+    <% } %>
+  </div>
+  <% if (page.ageWarning && (Date.now() - new Date(page.date).getTime()) > 180 * 1000 * 60 * 60 * 24) { %>
+    <div id="post-age-warning"><%-__('common.age_notice')%></div>
+  <% } %>
+  <div id="page-content"><%-page.content%></div>
+  <div id="page-content-end"></div>
+  <div class="tags">
+    <% page.tags.forEach(tag => { %>
+    <a class="tag-item" href="<%='/'+tag.path%>"><%=tag.name%></a>
+    <% }); %>
+  </div>
+</article>
+
+<% if (!page?.series) { %>
+<div class="post-nav-wrap">
+  <div class="post-nav">
+    <% if (page.prev) { %>
+    <a class="post-nav-item prev" target="_self" href="<%= url_for(page.prev.path) %>"><span class="item-link"><%= page.prev.title %></span><% if (page.prev.subTitle) { %><span class="sub-title"><%=page.prev.subTitle%></span><% } %><span class="nav-indicator-text"><%=__('common.prevPost')%></span></a>
+    <% } %>
+    <% if (page.next) { %>
+    <a class="post-nav-item next" target="_self" href="<%= url_for(page.next.path) %>"><span class="item-link"><%= page.next.title %></span><% if (page.next.subTitle) { %><span class="sub-title"><%=page.next.subTitle%></span><% } %><span class="nav-indicator-text"><%=__('common.nextPost')%></a>
+    <% } %>
+  </div>
+</div>
+<% } %>
+
+<% if(page.donates) { %>
+<div id="page-donates"><%=__('common.donateToAuthor')%>
+  <div id="donate-modal">
+    <% page.donates.forEach(donateMethod => { %>
+    <img class="qr-code" src="<%=donateMethod.qrcode%>" alt="<%=donateMethod.type%>" />
+    <% }); %>
+  </div>
+</div>
+<% if (page.sponsors?.length) { %>
+  <div class="sponsor-list">
+    <div class="sponsor-list-header"><%=__('common.thanks')%></div>
+    <ul>
+      <% page.sponsors.forEach(sponsor => { %>
+      <li class="sponsor-item">
+        <span class="sponsor-name"><%=sponsor.name%></span>
+        <span class="sponsor-amount"><%=__('common.sponsored')%> <%=sponsor.amount%></span>
+        <span class="sponsor-date"><%=getPostDate(sponsor.date)%></span>
+      </li>
+    <% }); %>
+    </ul>
+  </div>
+<% } %>
+<% } %>
+
+<% if (page?.series) { 
+var series = site.posts.filter(item=>item.series && item.series === page?.series).sort('date', -1).toArray()
+const currentIndex = series.findIndex(item=>item.source === page.source);
+const previousPost = series[currentIndex - 1] || null;
+const nextPost = series[currentIndex + 1] || null;
+%>
+<div class="series-nav">
+  <div class="series-name">
+    <div class="series-name-content">
+      <i class="series-icon"></i>
+      <span><%=page?.series%></span>
+      <span class="dot"></span>
+      <span><%=__('common.toc')%></span>
+    </div>
+  </div>
+
+  <% if (previousPost || nextPost) { %>
+  <div class="post-nav-wrap">
+    <div class="post-nav">
+      <% if (previousPost) { %>
+      <a class="post-nav-item prev" target="_self" href="<%= url_for(previousPost.path) %>"><span class="item-link"><%= previousPost.title %></span><% if (previousPost.subTitle) { %><span class="sub-title"><%=previousPost.subTitle%></span><% } %><span class="nav-indicator-text"><%=__('common.prevPost')%></span></a>
+      <% } %>
+      <% if (nextPost) { %>
+      <a class="post-nav-item next" target="_self" href="<%= url_for(nextPost.path) %>"><span class="item-link"><%= nextPost.title %></span><% if (nextPost.subTitle) { %><span class="sub-title"><%=nextPost.subTitle%></span><% } %><span class="nav-indicator-text"><%=__('common.nextPost')%></a>
+      <% } %>
+    </div>
+  </div>
+  <% } %>
+
+  <div id="series" class="series-popup">
+    <div class="popup-header">
+      <span class="close-series-popup-icon-wrap">
+        <i class="close-series-popup-icon"></i>
+      </span>
+      <span class="title"><%=page?.series%></span>
+      <span class="details-link">
+        <a href="<%='/series/' + page.series%>"><%=__('common.details')%></a>
+      </span>
+    </div>
+    <div class="series-items">
+      <% series.forEach((item, index) => { %>
+      <a class="series-item-link<%-item.source === page.source ? ' active': ''%>" href="<%=url_for(item.path)%>"><%-`${series.length - index}. ${item.title}`%><% if (item.subTitle) { %><span class="sub-title"><%=item.subTitle%></span><% } %></a>
+      <% }); %>
+    </div>
+  </div>
+</div>
+<% } %>
+
+<% if (page.copyright) { %>
+<div class="copyright-desc"><%=__('common.copyrightDesc')%></div>
+<% } %>
+
+<% if (theme.comment && page.comment !== false) { %>
+<div id="gitalk-container"></div>
+
+<script defer>
+  var $gitalkInitiated = false;
+  function hashPathname(pathname) {
+    let hash = 2166136261;
+    for (let i = 0; i < pathname.length; i++) {
+      hash ^= pathname.charCodeAt(i);
+      hash +=
+        (hash << 1) +
+        (hash << 4) +
+        (hash << 7) +
+        (hash << 8) +
+        (hash << 24);
+    }
+    return (hash >>> 0).toString(36);
+  }
+
+  function loadGitalk() {
+    if ($gitalkInitiated) {
+      return;
+    }
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "/js/gitalk/gitalk.css";
+    document.head.appendChild(link);
+    const script = document.createElement("script");
+    script.src = "/js/gitalk/gitalk.min.js";
+    const pageId = location.pathname.length > 40 ? hashPathname(location.pathname) : location.pathname;
+    console.log(`GitTalk page ID: ${pageId}`);
+    script.onload = function() {
+      var pageLanguage = "<%=page.language%>" || "<%=config.language%>";
+      var gitalk = new Gitalk({
+        clientID: "<%=theme.comment.client_id%>",
+        clientSecret: "<%=theme.comment.client_secret%>",
+        repo: "<%=theme.comment.repo%>",
+        owner: "<%=theme.comment.owner%>",
+        admin: "<%=theme.comment.admin%>",
+        id: pageId,
+        distractionFreeMode: false,
+        proxy: "<%=theme.comment.proxy%>",
+        language: pageLanguage,
+      });
+
+      gitalk.render("gitalk-container");
+    };
+    document.body.appendChild(script);
+    $gitalkInitiated = true;
+  }
+  document.addEventListener("DOMContentLoaded", function() {
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          loadGitalk();
+          observer.unobserve(entry.target);
+        }
+      });
+    });
+    const target = document.getElementById("gitalk-initiator");
+    const gitalkContainer = document.getElementById("gitalk-container");
+    if (target) {
+      observer.observe(target);
+    }
+    if (gitalkContainer) {
+      observer.observe(gitalkContainer);
+    }
+  });
+</script>
+<% } %>
+
+<% if ([config?.theme_config?.photoswipe ?? true, page.photoswipe ?? true, /<img/.test(page?.content)].every(enable=>enable)) {
+  const version = theme.version;
+  const hdrAssetsPrefix = page?.hdrAssetsPrefix || '';
+%>
+<link rel="stylesheet" href="/css/photoswipe.css?v=<%=version%>" />
+<link rel="stylesheet" href="/css/photoswipe-dynamic-caption-plugin.css?v=<%=version%>" />
+<script type="module" defer>
+  import PhotoSwipeLightbox from '/js/photoswipe/photoswipe-lightbox.esm.min.js?v=<%=version%>';
+  import PhotoSwipe from '/js/photoswipe/photoswipe.esm.min.js?v=<%=version%>';
+  import PhotoSwipeDynamicCaption from '/js/photoswipe/photoswipe-dynamic-caption-plugin.esm.js?v=<%=version%>';
+  let isPswpOpening = false;
+  let hdrAssetsPrefix = '<%=hdrAssetsPrefix%>';
+  const getSafeAreaHeight = () => {
+    const el = document.getElementById('safe-area-test');
+    const height = window.getComputedStyle(el).height;
+    return parseInt(height) ?? 0
+  }
+  const smallScreenPadding = {
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0
+  };
+  const largeScreenPadding = {
+    top: 30,
+    bottom: 30 + getSafeAreaHeight(),
+    left: 0,
+    right: 0
+  };
+  const isHDRScreen = window.screen.colorDepth >= 30;
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: '#post',
+    children: 'a.gallery-item',
+    bgOpacity: 1,
+    pswpModule: PhotoSwipe,
+    paddingFn: (viewportSize) => {
+      return viewportSize.x < 700 ? smallScreenPadding : largeScreenPadding
+    },
+  });
+
+  const getExif = (element) => {
+    const exifString = element?.dataset?.pspwExif || '';
+    const locationString = element?.dataset?.pspwLocation || '';
+    const matches = [...exifString.matchAll(/\{([^}]*)\}/g)].map(match => match[1])
+    if (matches?.length) {
+      const locationMatches = [...locationString.matchAll(/\{([^}]*)\}/g)].map(match => match[1]);
+      const keys = ['camera', 'lens', 'iso', 'focusLength', 'ev', 'aperture', 'shutterSpeed', 'hdr'];
+      const [camera, iso, focusLength, aperture, shutterSpeed, ev, lens, isHDR] = matches;
+      const isHDRActive = (isHDRScreen && (!!isHDR || element?.href?.includes(hdrAssetsPrefix)) && window.hdrEnabled) ? 'HDR' : ''
+      const exifObj = {
+        camera,
+        iso,
+        focusLength,
+        aperture,
+        shutterSpeed,
+        ev,
+        lens,
+        hdr: isHDRActive,
+        location: locationMatches?.length === 2 ? {
+          url: locationMatches[0],
+          title: locationMatches[1]
+        } : null
+      }
+      const altTextMap = {
+        camera: 'Camera',
+        iso: 'ISO',
+        focusLength: "Focus Length",
+        aperture: 'Aperture',
+        shutterSpeed: 'Shutter Speed',
+        ev: 'Exposure Value',
+        lens: 'Lens',
+        hdr: 'HDR Photo',
+        location: 'Location'
+      }
+      return `<div class="img-exif">${keys.map(key=>exifObj[key]?`<span class="${key}" title="${altTextMap[key]}">${typeof exifObj[key] === 'boolean' ? '' : exifObj[key]}</span>`: '').join('')}${exifObj.location ? `<a href="${exifObj.location.url}"><span class="location">${exifObj.location.title}</span></a>`: ''}</div>`
+    }
+    return ''
+  }
+  const captionPlugin = new PhotoSwipeDynamicCaption(lightbox, {
+    type: 'auto',
+  });
+
+  lightbox.addFilter('placeholderSrc', (placeholderSrc, content) => {
+    const thumbnail = content?.slide?.data?.msrc || ''
+    return thumbnail || placeholderSrc;
+  });
+
+  lightbox.on('uiRegister', function() {
+    lightbox.pswp.ui.registerElement({
+      name: 'custom-caption',
+      order: 9,
+      isButton: false,
+      appendTo: 'root',
+      html: '',
+      onInit: (el, pswp) => {
+        lightbox.pswp.on('change', () => {
+          const currSlideElement = lightbox.pswp.currSlide.data.element;
+          let captionHTML = '';
+          if (currSlideElement) {
+            const gap = (window.innerHeight - lightbox.pswp.currSlide.data.height / lightbox.pswp.currSlide.data.width * window.innerWidth) / 2;
+            captionHTML = getExif(lightbox.pswp.currSlide.data?.element) || ''
+            if (window.innerWidth <= 600) {
+              el.style.top = `${gap}px`;
+              el.classList.add('mobile');
+            } else {
+              el.style.top = 'unset';
+              el.classList.remove('mobile');
+            }
+          }
+          el.innerHTML = captionHTML || '';
+        });
+      }
+    });
+  });
+
+  lightbox.on('beforeOpen', () => {
+    isPswpOpening = true;
+  });
+
+  lightbox.on('change', (e) => {
+    if (isPswpOpening) {
+      return isPswpOpening = false;
+    }
+    const currentImage = lightbox?.pswp?.currSlide?.data?.element;
+    currentImage && currentImage.scrollIntoView({
+      block: 'center',
+      behavior: 'instant'
+    })
+  });
+  lightbox.init();
+</script>
+<% } %>
+
+<%-partial('partials/related-posts')%>

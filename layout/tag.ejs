@@ -1,0 +1,8 @@
+<h1 id="archieve-h1"><%='#'+page.tag%></h1>
+<div class="posts-info-layout">
+  <div class="posts-wrap">
+    <%-partial('partials/recent-posts', { showHidden: true })%>
+    <%-partial('partials/paginator')%>
+  </div>
+  <div class="info-wrap"><%-partial('partials/site-info')%></div>
+</div>

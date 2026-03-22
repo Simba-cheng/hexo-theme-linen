@@ -1,0 +1,9 @@
+stylesheets:
+- /css/linen.css
+- /css/mediaquery.css
+
+scripts:
+- /js/linen.js
+
+sass:
+  outputStyle: compressed

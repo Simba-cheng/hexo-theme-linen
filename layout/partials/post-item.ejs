@@ -1,0 +1,35 @@
+<div class="post-item" href="<%=url_for(post.path)%>" onclick="onclickPostItem(this)">
+  <div class="item-body">
+    <div class="title-excerpt">
+      <div class="title-excerpt-text">
+        <a class="title" href="<%=url_for(post.path)%>" onclick="event.stopPropagation()"><%=post.title%><% if (post.subTitle) { %><span class="sub-title"><%=post.subTitle%></span><% } %></a>
+        <% if(post?.tags?.length) { %>
+          <div class="tags">
+            <% (post.tags || []).forEach(tag => { %>
+              <a class="tag-item" href="<%='/'+tag.path%>" onclick="event.stopPropagation()"><%=tag.name%></a>
+            <% }) %>
+          </div>
+        <% } %>
+        <div class="excerpt"><%-post?.excerpt||''%></div>
+      </div>
+      <div class="post-meta">
+        <% if (post.date && !date(post.date).startsWith('1970')) { %>
+        <time class="date" datetime="<%=post.date.toJSON()%>">
+          <%=getPostDate(post)%>
+        </time>
+        <% } %>
+        <span class="categories">
+          <% (post?.categories || []).forEach(category => { %>
+          <a class="category-item" href="<%='/'+category.path%>" onclick="event.stopPropagation()"><%=category.name%></a>
+          <% }); %>
+        </span>
+        <span class="read-time"><%-partial('partials/words', { post, count: false, readTime: true })%></span>
+      </div>
+    </div>
+    <% if (post.thumbnail || post.cover) { %>
+    <div class="cover-img">
+      <img src="<%=post.thumbnail || post.cover%>" alt="" loading="lazy" />
+    </div>
+    <% } %>
+  </div>
+</div>

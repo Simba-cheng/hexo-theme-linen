@@ -1,0 +1,18 @@
+<% if (page.posts.length > 0) { 
+  let topPosts = []; 
+  function getFirstFour(arr) {
+    return arr.slice(0, 4);
+  }
+  (theme?.topArticles || []).forEach(path=>{ 
+    const post = site.posts.findOne({ source: path }); 
+    if(post){ topPosts.push(post) } 
+  }) 
+  topPosts = getFirstFour(topPosts);
+  const isArchive = is_archive();
+%>
+<div id="recent-posts">
+  <% page.posts.filter(post=>is_home()?!(topPosts.map(v=>v.source)).includes(post.source): true).filter(v=>showHidden ? (isArchive ? !v?.hide?.archive : true) : !v?.hide?.recent).sort('date', -1).each(post => { %>
+  <%-partial('partials/post-item', { post: post })%>
+  <% }); %>
+</div>
+<% } %>
