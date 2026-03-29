@@ -67,7 +67,7 @@
   <div id="page-content-end"></div>
   <div class="tags">
     <% page.tags.forEach(tag => { %>
-    <a class="tag-item" href="<%='/'+tag.path%>"><%=tag.name%></a>
+    <a class="tag-item" href="<%=url_for(`/${tag.path}`)%>"><%=tag.name%></a>
     <% }); %>
   </div>
 </article>
@@ -236,12 +236,12 @@ const nextPost = series[currentIndex + 1] || null;
   const version = theme.version;
   const hdrAssetsPrefix = page?.hdrAssetsPrefix || '';
 %>
-<link rel="stylesheet" href="/css/photoswipe.css?v=<%=version%>" />
-<link rel="stylesheet" href="/css/photoswipe-dynamic-caption-plugin.css?v=<%=version%>" />
+<link rel="stylesheet" href="/linen-theme/css/photoswipe.css?v=<%=version%>" />
+<link rel="stylesheet" href="/linen-theme/css/photoswipe-dynamic-caption-plugin.css?v=<%=version%>" />
 <script type="module" defer>
-  import PhotoSwipeLightbox from '/js/photoswipe/photoswipe-lightbox.esm.min.js?v=<%=version%>';
-  import PhotoSwipe from '/js/photoswipe/photoswipe.esm.min.js?v=<%=version%>';
-  import PhotoSwipeDynamicCaption from '/js/photoswipe/photoswipe-dynamic-caption-plugin.esm.js?v=<%=version%>';
+  import PhotoSwipeLightbox from '/linen-theme/js/photoswipe/photoswipe-lightbox.esm.min.js?v=<%=version%>';
+  import PhotoSwipe from '/linen-theme/js/photoswipe/photoswipe.esm.min.js?v=<%=version%>';
+  import PhotoSwipeDynamicCaption from '/linen-theme/js/photoswipe/photoswipe-dynamic-caption-plugin.esm.js?v=<%=version%>';
   let isPswpOpening = false;
   let hdrAssetsPrefix = '<%=hdrAssetsPrefix%>';
   const getSafeAreaHeight = () => {

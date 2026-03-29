@@ -142,13 +142,13 @@ module.exports = function (hexo) {
       if (!fs.exists(filePath)) throw new TypeError(filePath + " not found!");
       const sourceCode = fs.readFileSync(filePath, { escape: true });
       fs.writeFileSync(
-        path.join(hexo.theme_dir, "source/js/lazyload.js"),
+        path.join(hexo.theme_dir, "source/linen-theme/js/lazyload.js"),
         sourceCode,
       );
     };
     const injectExtraStyles = function (sourceCode) {
       fs.writeFileSync(
-        path.join(hexo.theme_dir, "source/css/lazyload.css"),
+        path.join(hexo.theme_dir, "source/linen-theme/css/lazyload.css"),
         sourceCode,
       );
     };
@@ -175,7 +175,7 @@ module.exports = function (hexo) {
       htmlContent = htmlContent.replace(
         '<noscript id="noscript-styles"></noscript>',
         `<noscript id="noscript-styles"><style>${fs.readFileSync(
-          path.join(hexo.theme_dir, "source/css/noscript.css"),
+          path.join(hexo.theme_dir, "source/linen-theme/css/noscript.css"),
         )}</style></noscript>`,
       );
     }

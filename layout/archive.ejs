@@ -24,7 +24,7 @@ const archivesList = Object.entries(site.posts.filter(post=>!post?.hide?.archive
       <ul class="archive-list">
         <% categoriesList.forEach(category => { %>
         <li class="archive-list-item">
-          <a class="archive-list-link" data-firstletter="<%=category.name.charAt(0)%>" href="<%='/categories/' + category.name + '/'%>">
+          <a class="archive-list-link" data-firstletter="<%=category.name.charAt(0)%>" href="<%=url_for(`/categories/${category.name}/`)%>">
             <%=category.name%>
             <span class="archive-list-count"><%=category.count%></span>
           </a>
@@ -38,7 +38,7 @@ const archivesList = Object.entries(site.posts.filter(post=>!post?.hide?.archive
       <ul class="archive-list">
         <% archivesList.forEach(archive => { %>
         <li class="archive-list-item">
-          <a class="archive-list-link" data-firstletter="<%=archive.name.charAt(archive.name.length-1)%>" href="<%='/archives/' + archive.year + '/'%>">
+          <a class="archive-list-link" data-firstletter="<%=archive.name.charAt(archive.name.length-1)%>" href="<%=url_for(`/archives/${archive.year}/`)%>">
             <%=archive.name%>
             <span class="archive-list-count"><%=archive.count%></span>
           </a>
@@ -57,7 +57,7 @@ const archivesList = Object.entries(site.posts.filter(post=>!post?.hide?.archive
     <ul class="archive-list">
       <% seriesList.forEach(series => { %>
       <li class="archive-list-item">
-        <a class="archive-list-link" data-firstletter="<%=series.name.charAt(0)%>" href="<%='/series/' + series.name + '/'%>">
+        <a class="archive-list-link" data-firstletter="<%=series.name.charAt(0)%>" href="<%=url_for(`/series/${series.name}/`)%>">
           <%=series.name%>
           <span class="archive-list-count"><%=series.count%></span>
         </a>

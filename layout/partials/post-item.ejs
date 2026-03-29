@@ -6,7 +6,7 @@
         <% if(post?.tags?.length) { %>
           <div class="tags">
             <% (post.tags || []).forEach(tag => { %>
-              <a class="tag-item" href="<%='/'+tag.path%>" onclick="event.stopPropagation()"><%=tag.name%></a>
+              <a class="tag-item" href="<%=url_for(`/${tag.path}`)%>" onclick="event.stopPropagation()"><%=tag.name%></a>
             <% }) %>
           </div>
         <% } %>
@@ -20,7 +20,7 @@
         <% } %>
         <span class="categories">
           <% (post?.categories || []).forEach(category => { %>
-          <a class="category-item" href="<%='/'+category.path%>" onclick="event.stopPropagation()"><%=category.name%></a>
+          <a class="category-item" href="<%=url_for(`/${category.path}`)%>" onclick="event.stopPropagation()"><%=category.name%></a>
           <% }); %>
         </span>
         <span class="read-time"><%-partial('partials/words', { post, count: false, readTime: true })%></span>

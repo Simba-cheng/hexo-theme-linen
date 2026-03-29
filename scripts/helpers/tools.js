@@ -10,8 +10,7 @@ function getFile(filePath, defaultValue) {
   }
 }
 
-module.exports = (hexo) => {
-  hexo.extend.helper.register("take", function (arr, n = 1) {
+hexo.extend.helper.register("take", function (arr, n = 1) {
     return arr.slice(0, Math.max(0, n));
   });
 
@@ -215,4 +214,3 @@ module.exports = (hexo) => {
 
     return toc;
   });
-};

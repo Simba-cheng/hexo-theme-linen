@@ -3,7 +3,7 @@ var pageTitle = getPageTitle();
 %>
 <meta property="og:type" content="blog">
 <meta property="og:title" content="<%=pageTitle%>">
-<meta property="og:url" content="<%=config.url + '/' + page.path%>">
+<meta property="og:url" content="<%=url_for(page.path)%>">
 <meta property="og:site_name" content="<%=config.title%>">
 <meta property="og:description" content="<%=page?.seriesInfo?.description||page.excerpt||''%>">
 <meta property="og:locale" content="<%=page.language||config.language%>">

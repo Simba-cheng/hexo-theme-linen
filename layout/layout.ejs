@@ -14,7 +14,7 @@ const version = theme.version;
   <meta charset="UTF-8" />
   <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title><%=getPageTitle()%></title>
-  <link rel="icon" type="image/x-icon" href="<%=theme?.icon ?? '/favicon.svg'%>" />
+  <link rel="icon" type="image/x-icon" href="<%=url_for(theme?.icon ?? '/linen-theme/favicon.svg')%>" />
   <meta name="referrer" content="no-referrer-when-downgrade" />
   <% if (page.hide && page.hide.seo) { %>
   <meta name="robots" content="noindex, nofollow">
@@ -23,14 +23,14 @@ const version = theme.version;
   <%-partial('partials/share-meta')%> <% if (theme.stylesheets !== undefined
     && theme.stylesheets.length > 0) { %>
   <% if (is_post()) { %>
-  <link rel="stylesheet" href="/css/linkcard.css?v=<%=version%>" />
+  <link rel="stylesheet" href="<%=url_for(`/linen-theme/css/linkcard.css?v=${version}`)%>" />
   <% } %>
   <!-- stylesheets list from _config.yml -->
   <% theme.stylesheets.forEach(url => { %>
-  <link rel="stylesheet" href="<%=url%>?v=<%=version%>" />
+  <link rel="stylesheet" href="<%=url_for(`${url}?v=${version}`)%>" />
   <% }); %> <% } %>
   <% if (theme?.lazyload?.enable ?? true) { %>
-  <link rel="stylesheet" href="/css/lazyload.css?v=<%=version%>" />
+  <link rel="stylesheet" href="<%=url_for(`/linen-theme/css/lazyload.css?v=${version}`)%>" />
   <% } %>
   <% if (theme?.heads) { %>
   <% theme?.heads.forEach(head => { %>
@@ -77,13 +77,13 @@ const version = theme.version;
     <div class="side-content">
       <% if (series.length) { %>
       <div class="post-series">
-        <a class="series-title" href="<%='/series/' + page.series + '/'%>"><%=__('common.series')%>-<%=page.series%></a>
+        <a class="series-title" href="<%=url_for(`/series/${page.series}/`)%>"><%=__('common.series')%>-<%=page.series%></a>
         <div class="series-items">
           <% take(series, 50).forEach((item, index) => { %>
           <a class="series-item-link<%-item.source === page.source ? ' active': ''%>" href="<%=url_for(item.path)%>"><%-`${item.title}`%><% if (item.subTitle) { %><span class="sub-title"><%=item.subTitle%></span><% } %></a>
           <% }); %>
           <% if(series.length > 50) { %>
-          <a class="series-item-link view-more" href="<%='/series/' + page.series + '/'%>"><%-`${__('common.total')} ${series.length} ${__('common.seriesPostCountShort')}`%></a>
+          <a class="series-item-link view-more" href="<%=url_for(`/series/${page.series}/`)%>"><%-`${__('common.total')} ${series.length} ${__('common.seriesPostCountShort')}`%></a>
           <% } %>
         </div>
       </div>
@@ -101,16 +101,16 @@ const version = theme.version;
   <a id="back-to-top" href="#page-top" title="back to top"></a>
   <noscript id="noscript-styles"></noscript>
   <% if(is_post()) { %>
-  <script src="/js/toc.js?v=<%=version%>" defer></script>
+  <script src="<%=url_for(`/linen-theme/js/toc.js?v=${version}`)%>" defer></script>
   <% } %>
   <% if (theme.scripts !== undefined && theme.scripts.length > 0) { %>
   <!-- scripts list from theme config.yml -->
   <% theme.scripts.forEach(url => { %>
-  <script src="<%=url%>?v=<%=version%>"></script>
+  <script src="<%=url_for(`${url}?v=${version}`)%>"></script>
   <% }); %>
   <% } %>
   <% if (theme?.lazyload?.enable ?? true) { %>
-  <script src="/js/lazyload.js?v=<%=version%>"></script>
+  <script src="<%=url_for(`/linen-theme/js/lazyload.js?v=${version}`)%>"></script>
   <% } %>
   <% if (page.hdrAssetsPrefix) { %>
   <script>
@@ -118,7 +118,7 @@ const version = theme.version;
   </script>
   <% } %>
   <% if (page.hdrSwitch) { %>
-  <script src="/js/hdr.js?v=<%=version%>"></script>
+  <script src="<%url_for(`/linen-theme/js/hdr.js?v=${version}`)%>"></script>
   <% } %>
   <% if (theme?.appends?.length > 0) { %>
   <% theme.appends.forEach(appendItem => { %>

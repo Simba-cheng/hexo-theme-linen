@@ -27,6 +27,7 @@ hexo.extend.generator.register("rss", function (locals) {
   const posts = locals.posts.sort("-date").limit(themeConfig?.feed?.limit ?? 10);
   const config = hexo.config;
   const language = config.language || "";
+  const getPostDate = hexo.extend.helper.get("getPostDate");
 
   const feed = `<?xml version="1.0" encoding="UTF-8" ?>
 <?xml-stylesheet type="text/xsl" href="/css/rss-${language.startsWith("zh") ? "zh" : "en"}.xsl"?>
@@ -74,7 +75,7 @@ hexo.extend.generator.register("rss", function (locals) {
       <title>${escape(`${post.title}${post?.subTitle ? `(${post.subTitle})` : ""}`)}</title>
       <link>${config.url + url_for.bind(hexo)(post.path)}</link>
       <guid>${config.url + url_for.bind(hexo)(post.path)}</guid>
-      <pubDate>${hexo.extend.helper.store.getPostDate(post, language)}</pubDate>
+      <pubDate>${getPostDate(post, language)}</pubDate>
       <description><![CDATA[${rawHtml}]]></description>
     </item>`;
     })
