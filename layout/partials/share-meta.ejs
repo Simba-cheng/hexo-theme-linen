@@ -7,4 +7,4 @@ var pageTitle = getPageTitle();
 <meta property="og:site_name" content="<%=config.title%>">
 <meta property="og:description" content="<%=page?.seriesInfo?.description||page.excerpt||''%>">
 <meta property="og:locale" content="<%=page.language||config.language%>">
-<meta property="og:image" content="<%=page.seriesInfo?.cover||page.ogImage||page.cover||theme?.info?.siteCardBg||''%>">
+<meta property="og:image" content="<%=url_for(page.seriesInfo?.cover||page.ogImage||page.cover||theme?.info?.siteCardBg||'')%>">
