@@ -19,7 +19,7 @@ module.exports = function (hexo) {
       ...(hexo?.config?.theme_config?.lazyload || {}),
     };
 
-    const placeholderImage = /^(https?:\/\/|\/|data:image)/i.test(loadingImage)
+    const placeholderImage = /^(https?:\/\/|\/|data:image)/i.test(loadingImage) || loadingImage?.startsWith('../img')
       ? `url(${loadingImage})`
       : loadingImage;
 
@@ -162,14 +162,6 @@ module.exports = function (hexo) {
     };
     if (/<\/body>/gi.test(htmlContent)) {
       htmlContent = appendToHead(settingsContent, htmlContent);
-      htmlContent = appendToHead(
-        `<link rel="preload" as="image" href="${loadingImage}" />`,
-        htmlContent,
-      );
-      htmlContent = appendToHead(
-        `<link rel="preload" as="image" href="${errorTipImage}" />`,
-        htmlContent,
-      );
       injectExtraScript(lazyLoadPath);
       injectExtraStyles(injectedStyles);
       htmlContent = htmlContent.replace(

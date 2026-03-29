@@ -11,11 +11,11 @@ const rssPath = theme?.feed === false ? '' : theme?.feed?.path ?? '/feed.xml';
 <% } %>
 <div class="nav-header<%=is_post() ? ' is-post': ''%>">
   <div class="header-inner">
-    <a class="title" href="/" title="index" style="<%=[logoSrc ? `background-image: url(${logoSrc})`: '', logoWidth && logoHeight ? `aspect-ratio: ${logoWidth}/${logoHeight}` : ''].filter(v => v).join(';')%>"><%=logoText||''%></a>
+    <a class="title" href="<%=url_for('/')%>" title="index" style="<%=[logoSrc ? `background-image: url(${logoSrc})`: '', logoWidth && logoHeight ? `aspect-ratio: ${logoWidth}/${logoHeight}` : ''].filter(v => v).join(';')%>"><%=logoText||''%></a>
     <div class="right">
       <div class="navItems">
         <% (theme?.navItems || []).forEach(({ name, path }) => { %>
-        <a class="navItem<%=`/${page.path}`.startsWith(path) ? ' active' : ''%>" href="<%=path%>"><%=name%></a>
+        <a class="navItem<%=`/${page.path}`.startsWith(path) ? ' active' : ''%>" href="<%=url_for(path)%>"><%=name%></a>
         <% }); %>
       </div>
       <div class="buttonSet">
@@ -30,7 +30,7 @@ const rssPath = theme?.feed === false ? '' : theme?.feed?.path ?? '/feed.xml';
         <a class="button github" href="<%=theme?.info?.github || ''%>" target="_blank" title="github"></a>
         <% } %>
         <% if (rssPath) { %>
-          <a class="button rss" href="<%=rssPath%>" target="_blank" title="rss"></a>
+          <a class="button rss" href="<%=url_for(rssPath)%>" target="_blank" title="rss"></a>
         <% } %>
         <% if (hasTocs) { %>
         <div id="toc-toggle" class="button toc"></div>

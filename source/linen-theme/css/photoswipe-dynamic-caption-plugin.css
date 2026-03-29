@@ -79,35 +79,35 @@
 }
 
 .img-exif .camera::before {
-  background-image: url("/img/icons/exif/camera.svg");
+  background-image: url("../img/icons/exif/camera.svg");
 }
 
 .img-exif .iso::before {
-  background-image: url("/img/icons/exif/iso.svg");
+  background-image: url("../img/icons/exif/iso.svg");
 }
 
 .img-exif .focusLength::before {
-  background-image: url("/img/icons/exif/focusLength.svg");
+  background-image: url("../img/icons/exif/focusLength.svg");
 }
 
 .img-exif .aperture::before {
-  background-image: url("/img/icons/exif/aperture.svg");
+  background-image: url("../img/icons/exif/aperture.svg");
 }
 
 .img-exif .shutterSpeed::before {
-  background-image: url("/img/icons/exif/shutterSpeed.svg");
+  background-image: url("../img/icons/exif/shutterSpeed.svg");
 }
 
 .img-exif .ev::before {
-  background-image: url("/img/icons/exif/ev.svg");
+  background-image: url("../img/icons/exif/ev.svg");
 }
 
 .img-exif .lens::before {
-  background-image: url("/img/icons/exif/lens.svg");
+  background-image: url("../img/icons/exif/lens.svg");
 }
 
 .img-exif .hdr::before {
-  background-image: url("/img/icons/exif/hdr.svg");
+  background-image: url("../img/icons/exif/hdr.svg");
 }
 
 .img-exif .location {
@@ -115,7 +115,7 @@
 }
 
 .img-exif .location::before {
-  background-image: url("/img/icons/exif/location.svg");
+  background-image: url("../img/icons/exif/location.svg");
 }
 
 .img-exif .hdr {

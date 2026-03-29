@@ -15,12 +15,12 @@ const relatedPosts = site.posts.filter(item=>item.source !== page.source).filter
 <div id="related-posts">
   <div class="related-posts-title"><%=__('common.relatedPosts')%></div>
   <% relatedPosts.each(post => { 
-      const coverImg = post.thumbnail || post.cover || '/img/related-post.jpg'
+      const coverImg = post.thumbnail || post.cover || '../img/related-post.jpg'
       %>
   <a href="<%=url_for(post.path)%>">
     <div class="shared-link">
       <div class="cover-img">
-        <img no-lazy class="not-gallery-item" src="<%=coverImg%>" alt="" loading="lazy">
+        <img no-lazy class="not-gallery-item" src="<%=url_for(coverImg)%>" alt="" loading="lazy">
       </div>
       <div class="link-content">
         <span class="link-title"><%=post.title%></span>

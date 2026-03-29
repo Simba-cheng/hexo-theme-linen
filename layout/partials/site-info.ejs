@@ -4,7 +4,7 @@ const series = Array.from(new Set(site.posts.filter(item=>item.series).sort('dat
 <div class="site-info<%=is_home_first_page() ? ' home' : ''%>">
   <div class="info-row">
     <div class="author">
-      <img class="avatar" src="<%=theme?.info?.avatar || '/img/vue-color-avatar.png'%>" alt="" />
+      <img class="avatar" src="<%=url_for(theme?.info?.avatar || '/linen-theme/img/vue-color-avatar.png')%>" alt="" />
       <div class="name"><%=config?.author || ''%></div>
     </div>
   </div>

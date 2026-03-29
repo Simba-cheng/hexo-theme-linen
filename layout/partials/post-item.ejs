@@ -28,7 +28,7 @@
     </div>
     <% if (post.thumbnail || post.cover) { %>
     <div class="cover-img">
-      <img src="<%=post.thumbnail || post.cover%>" alt="" loading="lazy" />
+      <img src="<%=url_for(post.thumbnail || post.cover)%>" alt="" loading="lazy" />
     </div>
     <% } %>
   </div>

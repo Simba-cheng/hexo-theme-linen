@@ -19,7 +19,7 @@
       }
     }
   </script>
-  <img id="postCoverImg" class="cover-img" src="<%=page.cover%>" alt="" onload="onPostCoverImgLoaded(this)" />
+  <img id="postCoverImg" class="cover-img" src="<%=url_for(page.cover)%>" alt="" onload="onPostCoverImgLoaded(this)" />
   <% if(page.coverInfo) { %>
   <div class="cover-info">
     <% if(page.coverInfo.url) { %>
@@ -186,10 +186,10 @@ const nextPost = series[currentIndex + 1] || null;
     }
     const link = document.createElement("link");
     link.rel = "stylesheet";
-    link.href = "/js/gitalk/gitalk.css";
+    link.href = "<%=url_for('/linen-theme/css/gitalk/gitalk.css')%>";
     document.head.appendChild(link);
     const script = document.createElement("script");
-    script.src = "/js/gitalk/gitalk.min.js";
+    script.src = "<%=url_for('/linen-theme/js/gitalk/gitalk.min.js')%>";
     const pageId = location.pathname.length > 40 ? hashPathname(location.pathname) : location.pathname;
     console.log(`GitTalk page ID: ${pageId}`);
     script.onload = function() {
@@ -236,12 +236,12 @@ const nextPost = series[currentIndex + 1] || null;
   const version = theme.version;
   const hdrAssetsPrefix = page?.hdrAssetsPrefix || '';
 %>
-<link rel="stylesheet" href="/linen-theme/css/photoswipe.css?v=<%=version%>" />
-<link rel="stylesheet" href="/linen-theme/css/photoswipe-dynamic-caption-plugin.css?v=<%=version%>" />
+<link rel="stylesheet" href="<%=url_for(`/linen-theme/css/photoswipe.css?v=${version}`)%>" />
+<link rel="stylesheet" href="<%=url_for(`/linen-theme/css/photoswipe-dynamic-caption-plugin.css?v=${version}`)%>" />
 <script type="module" defer>
-  import PhotoSwipeLightbox from '/linen-theme/js/photoswipe/photoswipe-lightbox.esm.min.js?v=<%=version%>';
-  import PhotoSwipe from '/linen-theme/js/photoswipe/photoswipe.esm.min.js?v=<%=version%>';
-  import PhotoSwipeDynamicCaption from '/linen-theme/js/photoswipe/photoswipe-dynamic-caption-plugin.esm.js?v=<%=version%>';
+  import PhotoSwipeLightbox from '<%=url_for(`/linen-theme/js/photoswipe/photoswipe-lightbox.esm.min.js?v=${version}`)%>';
+  import PhotoSwipe from '<%=url_for(`/linen-theme/js/photoswipe/photoswipe.esm.min.js?v=${version}`)%>';
+  import PhotoSwipeDynamicCaption from '<%=url_for(`/linen-theme/js/photoswipe/photoswipe-dynamic-caption-plugin.esm.js?v=${version}`)%>';
   let isPswpOpening = false;
   let hdrAssetsPrefix = '<%=hdrAssetsPrefix%>';
   const getSafeAreaHeight = () => {

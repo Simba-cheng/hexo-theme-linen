@@ -13,7 +13,7 @@
   <a class="post-item" href="<%=url_for(post.path)%>">
     <div class="item-body">
       <div class="cover-img">
-        <img src="<%=post.thumbnail || post.cover%>" alt="" />
+        <img src="<%=url_for(post.thumbnail || post.cover)%>" alt="" />
       </div>
       <div class="title-excerpt">
         <div class="title"><%=post.title%><% if (post.subTitle) { %><span class="sub-title"><%=post.subTitle%></span><% } %></div>

@@ -9,7 +9,7 @@
     local("Source Han Serif CN"),
     local("Source Han Serif SC"),
     local("Songti SC"),
-    url("/fonts/SourceHanSerifSC-Regular.woff2?v=#{$font-version}")
+    url("../fonts/SourceHanSerifSC-Regular.woff2?v=#{$font-version}")
       format("woff2");
   font-display: swap;
   unicode-range: U+4E00-9FFF;
@@ -17,14 +17,14 @@
 @font-face {
   font-family: "LXGWWenKai";
   font-display: swap;
-  src: url("/fonts/LXGWWenKai-Regular.woff2?v=#{$font-version}") format("woff2");
+  src: url("../fonts/LXGWWenKai-Regular.woff2?v=#{$font-version}") format("woff2");
   font-display: swap;
   unicode-range: U+4E00-9FFF;
 }
 
 @font-face {
   font-family: "source-serif";
-  src: url("/fonts/SourceSerif4-Regular.ttf.woff2?v=#{$font-version}")
+  src: url("../fonts/SourceSerif4-Regular.ttf.woff2?v=#{$font-version}")
     format("woff2");
   unicode-range:
     U+0-7F, U+A0, U+B7, U+200A, U+2014, U+2018, U+2019, U+201C, U+201D, U+2022,
@@ -33,7 +33,7 @@
 }
 @font-face {
   font-family: "Source Sans Pro";
-  src: url("/fonts/Source-Sans-Pro-Regular-2.woff2?v=#{$font-version}")
+  src: url("../fonts/Source-Sans-Pro-Regular-2.woff2?v=#{$font-version}")
     format("woff2");
   font-display: swap;
 }
@@ -238,7 +238,7 @@ body {
       margin-right: 30px;
       width: 225px;
       height: 42px;
-      background-image: url("/img/logo.svg");
+      background-image: url("../img/logo.svg");
       background-size: cover;
     }
     .right {
@@ -274,7 +274,7 @@ body {
             margin-right: 16px;
           }
           &.toc {
-            background-image: url("/img/icons/toc1.svg");
+            background-image: url("../img/icons/toc1.svg");
             background-size: contain;
             display: none;
             background-repeat: no-repeat;
@@ -282,32 +282,32 @@ body {
             cursor: pointer;
           }
           &.search {
-            background-image: url("/img/icons/search.svg");
+            background-image: url("../img/icons/search.svg");
             background-size: cover;
           }
           &.github {
-            background-image: url("/img/icons/github.svg");
+            background-image: url("../img/icons/github.svg");
             background-size: cover;
           }
           &.zh-CN {
-            background-image: url("/img/icons/chinese.svg");
+            background-image: url("../img/icons/chinese.svg");
             background-size: cover;
             width: 30px;
             height: 30px;
           }
           &.en {
-            background-image: url("/img/icons/english.svg");
+            background-image: url("../img/icons/english.svg");
             background-size: cover;
             width: 30px;
             height: 30px;
           }
           &.rss {
-            background-image: url("/img/icons/rss.svg");
+            background-image: url("../img/icons/rss.svg");
             background-size: cover;
             margin-right: 0;
           }
           &.hdr-switch {
-            background-image: url("/img/icons/hdr.svg");
+            background-image: url("../img/icons/hdr.svg");
             background-size: cover;
             cursor: pointer;
             position: relative;
@@ -327,8 +327,8 @@ body {
             }
             &.hdr_on {
               background: linear-gradient(90deg, #ff6ec4, #7873f5, #4ade80);
-              -webkit-mask: url("/img/icons/hdr.svg") no-repeat center;
-              mask: url("/img/icons/hdr.svg") no-repeat center;
+              -webkit-mask: url("../img/icons/hdr.svg") no-repeat center;
+              mask: url("../img/icons/hdr.svg") no-repeat center;
               -webkit-mask-size: contain;
               mask-size: contain;
               &::after {
@@ -423,12 +423,12 @@ body {
         display: inline-block;
         width: 20px;
         height: 20px;
-        background-image: url("/img/icons/copyright.svg");
+        background-image: url("../img/icons/copyright.svg");
         background-size: cover;
         &.location {
           width: 15px;
           height: 15px;
-          background-image: url("/img/icons/location.svg");
+          background-image: url("../img/icons/location.svg");
         }
       }
       .text {
@@ -506,7 +506,7 @@ body {
       display: inline-block;
       width: 0.8em;
       height: 0.8em;
-      background-image: url("/img/icons/link.svg");
+      background-image: url("../img/icons/link.svg");
       background-size: cover;
       transition: all ease-in-out 0.3s;
       opacity: 0;
@@ -609,7 +609,7 @@ body {
       display: inline-block;
       width: 1em;
       height: 1em;
-      background-image: url("/img/icons/redirect.svg");
+      background-image: url("../img/icons/redirect.svg");
       background-size: cover;
       vertical-align: middle;
       margin-bottom: 0.25em;
@@ -726,7 +726,7 @@ body {
             display: inline-block;
             width: 35px;
             height: 20px;
-            background-image: url("/img/icons/code.svg");
+            background-image: url("../img/icons/code.svg");
             background-size: 16px 16px;
             background-position: center;
             background-repeat: no-repeat;
@@ -746,7 +746,7 @@ body {
       right: 0;
       padding-top: 0.5em;
       padding-right: 0.5em;
-      background-image: url("/img/icons/copy.png");
+      background-image: url("../img/icons/copy.png");
       background-size: 14px 14px;
       background-position: 0 75%;
       background-repeat: no-repeat;
@@ -840,7 +840,7 @@ body {
       width: 100%;
       height: 24px;
       background-color: #fff;
-      background-image: url("/img/icons/up-down.svg");
+      background-image: url("../img/icons/up-down.svg");
       background-size: 24px 24px;
       background-repeat: no-repeat;
       background-position: center;
@@ -897,7 +897,7 @@ body {
       display: block;
       width: 24px;
       height: 24px;
-      background-image: url("/img/icons/new1.svg");
+      background-image: url("../img/icons/new1.svg");
       background-size: cover;
     }
   }
@@ -916,10 +916,10 @@ body {
       height: 35px;
       background-size: cover;
       &.zip {
-        background-image: url("/img/icons/ZIP.svg");
+        background-image: url("../img/icons/ZIP.svg");
       }
       &.bin {
-        background-image: url("/img/icons/binary.svg");
+        background-image: url("../img/icons/binary.svg");
       }
     }
     .attachment-size {
@@ -1071,7 +1071,7 @@ body {
           display: inline-block;
           width: 12px;
           height: 12px;
-          background-image: url("/img/icons/prev.svg");
+          background-image: url("../img/icons/prev.svg");
           background-size: cover;
           vertical-align: middle;
           margin-right: 4px;
@@ -1087,7 +1087,7 @@ body {
           display: inline-block;
           width: 12px;
           height: 12px;
-          background-image: url("/img/icons/next.svg");
+          background-image: url("../img/icons/next.svg");
           background-size: cover;
           vertical-align: middle;
           margin-left: 4px;
@@ -1151,7 +1151,7 @@ body {
           content: "";
           width: 13px;
           height: 13px;
-          background-image: url("/img/icons/tag.svg");
+          background-image: url("../img/icons/tag.svg");
           background-size: cover;
           filter: invert(1);
           margin-right: 4px;
@@ -1319,7 +1319,7 @@ body {
   top: $navbarMinHeight;
   left: 0;
   background-color: #ffffff;
-  background-image: url("/img/pattern-randomized.jpg");
+  background-image: url("../img/pattern-randomized.jpg");
   background-attachment: absolute;
   background-size: cover;
   opacity: 0.5;
@@ -1637,7 +1637,7 @@ body {
       display: inline-block;
       width: 13px;
       height: 13px;
-      background-image: url("/img/icons/shelf.svg");
+      background-image: url("../img/icons/shelf.svg");
       background-size: cover;
       margin-right: 0.5em;
     }
@@ -1685,7 +1685,7 @@ body {
         display: block;
         width: 24px;
         height: 24px;
-        background-image: url("/img/icons/arrow-down.svg");
+        background-image: url("../img/icons/arrow-down.svg");
         background-size: cover;
       }
       .title {
@@ -1840,7 +1840,7 @@ body {
       display: inline-block;
       width: 20px;
       height: 20px;
-      background-image: url("/img/icons/toc.svg");
+      background-image: url("../img/icons/toc.svg");
       background-size: cover;
       vertical-align: middle;
       margin-bottom: 4px;
@@ -1960,7 +1960,7 @@ body {
       display: inline-block;
       width: 13px;
       height: 13px;
-      background-image: url("/img/icons/shelf.svg");
+      background-image: url("../img/icons/shelf.svg");
       background-size: cover;
       vertical-align: middle;
       margin-bottom: 4px;
@@ -2168,7 +2168,7 @@ html[lang="zh-CN"] {
 .custom-checked-checkbox {
   width: 1.5em;
   height: 1.5em;
-  background-image: url("/img/icons/checked-checkbox.svg");
+  background-image: url("../img/icons/checked-checkbox.svg");
   background-size: 1em 1em;
   background-repeat: no-repeat;
   background-position: center;
@@ -2190,7 +2190,7 @@ html[lang="zh-CN"] {
     display: inline-block;
     width: 13px;
     height: 13px;
-    background-image: url("/img/icons/tag.svg");
+    background-image: url("../img/icons/tag.svg");
     background-size: cover;
     margin-right: 4px;
     margin-bottom: -1px;
@@ -2442,7 +2442,7 @@ details {
       transition: transform 0.2s;
       width: 1em;
       height: 1em;
-      background-image: url("/img/icons/collapsed.svg");
+      background-image: url("../img/icons/collapsed.svg");
       background-size: 100% 100%;
     }
   }

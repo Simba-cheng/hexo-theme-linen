@@ -28,9 +28,12 @@ hexo.extend.generator.register("rss", function (locals) {
   const config = hexo.config;
   const language = config.language || "";
   const getPostDate = hexo.extend.helper.get("getPostDate");
+  const cssUrl = url_for.bind(hexo)(`/linen-theme/css/rss-${language.startsWith("zh") ? "zh" : "en"}.xsl`);
+
+  console.log(cssUrl)
 
   const feed = `<?xml version="1.0" encoding="UTF-8" ?>
-<?xml-stylesheet type="text/xsl" href="/css/rss-${language.startsWith("zh") ? "zh" : "en"}.xsl"?>
+<?xml-stylesheet type="text/xsl" href="${cssUrl}"?>
 <rss version="2.0">
 <channel>
   <title>${escape(config.title)}</title>
