@@ -2,6 +2,8 @@
 
 A clean Hexo theme focused on readability, UX, and minimal configuration.
 
+![](https://github.com/LynanBreeze/hexo-theme-linen-doc-zh-CN/blob/main/source/img/preview-screenshot.jpg?raw=true)
+
 ## Features
 
 - Elegant and minimal design
@@ -9,7 +11,7 @@ A clean Hexo theme focused on readability, UX, and minimal configuration.
 - Optimized typography
 - Customizable navigation
 - Supports tags, categories, archives, and series
-- Fast build and lightweight assets
+- Fast build and lightweight assets(without plugins)
 
 ## Installation
 

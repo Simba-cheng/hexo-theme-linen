@@ -53,6 +53,7 @@ hexo.extend.helper.register("take", function (arr, n = 1) {
     try {
       const page = this.page;
       const config = this.config;
+      const rootPath = config.root || "/";
       const translations = page.translations || [];
       const currentLanguage = page.language || config.language;
       const targetLanguage =
@@ -79,26 +80,27 @@ hexo.extend.helper.register("take", function (arr, n = 1) {
       let origin =
         config?.theme_config?.siteOriginLocaleMap?.[targetLanguage] ||
         config.url;
-      let targetLanguagePath = `${origin}${this.url_for(page.path)}`;
+      let targetPath = this.url_for(page.path);
       if (page?.seriesInfo?.mappingName) {
-        targetLanguagePath = `${origin}/series/${page?.seriesInfo?.mappingName}/`;
+        targetPath = this.url_for(`/series/${page?.seriesInfo?.mappingName}/`);
       }
       if (this.is_category()) {
         if (categoriesInfo?.[page.category]?.mappingName) {
-          targetLanguagePath = `${origin}/categories/${
+          targetPath = this.url_for(`/categories/${
             categoriesInfo?.[page.category]?.mappingName
-          }/`;
+          }/`);
         } else {
           hasTranslatation = false;
         }
       }
       if (this.is_tag()) {
         if (tagsInfo?.[page.tag]?.mappingName) {
-          targetLanguagePath = `${origin}/tags/${tagsInfo?.[page.tag]?.mappingName}/`;
+          targetPath = this.url_for(`/tags/${tagsInfo?.[page.tag]?.mappingName}/`);
         } else {
           hasTranslatation = false;
         }
       }
+      const targetLanguagePath = `${origin}${targetPath.replace(rootPath, "")}`;
       return {
         hasTranslatation,
         targetLanguage,

@@ -1384,8 +1384,7 @@ body {
     }
     #post {
       margin: 0 auto;
-      padding: 0 $commonPadding;
-      padding-top: min(calc(3vw - 6px), 9px);
+      padding: min(calc(3vw - 6px), 9px) $commonPadding;
       h1:first-child {
         margin-top: 0;
       }
