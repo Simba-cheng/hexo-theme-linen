@@ -19,6 +19,6 @@ const series = Array.from(new Set(site.posts.filter(item=>item.series).sort('dat
     <a href="<%=url_for('/archives/#tags')%>" target="_self"><%=site.tags.length%> <%=__('common.tags')%></a>
     <% if (series.length) { %>
     <span class="divider">/</span>
-    <a href="<%url_for('/archives/#series')%>" target="_self"><%=series.length%> <%=__('common.series')%></a><% } %>
+    <a href="<%=url_for('/archives/#series')%>" target="_self"><%=series.length%> <%=__('common.series')%></a><% } %>
   </div>
 </div>

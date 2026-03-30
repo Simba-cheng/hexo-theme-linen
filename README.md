@@ -2,7 +2,7 @@
 
 A clean Hexo theme focused on readability, UX, and minimal configuration.
 
-![](https://github.com/LynanBreeze/hexo-theme-linen-doc-zh-CN/blob/main/source/img/preview-screenshot.jpg?raw=true)
+![](https://github.com/LynanBreeze/hexo-theme-linen-doc/blob/main/source/img/preview-screenshot.jpg?raw=true)
 
 ## Features
 
@@ -39,7 +39,9 @@ hexo clean && hexo serve
 
 Full documentation and examples:
 
-https://lynanbreeze.github.io/hexo-theme-linen-doc-zh-CN/
+EN: https://lynanbreeze.github.io/hexo-theme-linen-doc/
+
+简体中文: https://lynanbreeze.github.io/hexo-theme-linen-doc-zh-CN/
 
 ## License
 
