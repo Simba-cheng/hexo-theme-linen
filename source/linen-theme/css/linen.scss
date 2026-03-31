@@ -623,6 +623,23 @@ body {
         display: none;
       }
     }
+    &:has(> span.break-on-mobile) {
+      &::after {
+        display: none;
+      }
+      .break-on-mobile {
+        &::after {
+          content: "";
+          display: inline-block;
+          width: 1em;
+          height: 1em;
+          background-image: url("/img/icons/redirect.svg");
+          background-size: cover;
+          vertical-align: middle;
+          margin-bottom: 0.25em;
+        }
+      }
+    }
   }
 
   hr {
