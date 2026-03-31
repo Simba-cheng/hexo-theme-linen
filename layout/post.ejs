@@ -50,7 +50,7 @@
     <% if (page?.categories?.length) { %>
       <div class="categories">
         <% (page?.categories || []).forEach(category => { %>
-        <a class="category-item" href="<%='/'+category.path%>"><%=category.name%></a>
+        <a class="category-item" href="<%=url_for(`/${category.path}`)%>"><%=category.name%></a>
         <% }); %>
       </div>
     <% } %>
@@ -146,7 +146,7 @@ const seriesInfo = getSeriesInfo(page?.series);
       </span>
       <span class="title"><%=page?.series%></span>
       <span class="details-link">
-        <a href="<%='/series/' + page.series%>"><%=__('common.details')%></a>
+        <a href="<%=url_for(`/series/${page.series}/`)%>"><%=__('common.details')%></a>
       </span>
     </div>
     <div class="series-items">
