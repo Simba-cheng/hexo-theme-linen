@@ -114,6 +114,7 @@ var series = site.posts.filter(item=>item.series && item.series === page?.series
 const currentIndex = series.findIndex(item=>item.source === page.source);
 const previousPost = series[currentIndex - 1] || null;
 const nextPost = series[currentIndex + 1] || null;
+const seriesInfo = getSeriesInfo(page?.series);
 %>
 <div class="series-nav">
   <div class="series-name">
@@ -150,7 +151,9 @@ const nextPost = series[currentIndex + 1] || null;
     </div>
     <div class="series-items">
       <% series.forEach((item, index) => { %>
-      <a class="series-item-link<%-item.source === page.source ? ' active': ''%>" href="<%=url_for(item.path)%>"><%-`${series.length - index}. ${item.title}`%><% if (item.subTitle) { %><span class="sub-title"><%=item.subTitle%></span><% } %></a>
+      <a class="series-item-link<%-item.source === page.source ? ' active': ''%>" href="<%=url_for(item.path)%>">
+        <span class="item-index"><%-`${seriesInfo?.noOrder === 'asc' ? index + 1 : series.length - index}. `%></span><%=item.title%><% if (item.subTitle) { %><span class="sub-title"><%=item.subTitle%></span><% } %>
+      </a>
       <% }); %>
     </div>
   </div>

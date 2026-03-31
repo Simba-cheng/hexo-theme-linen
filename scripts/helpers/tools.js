@@ -49,6 +49,14 @@ hexo.extend.helper.register("take", function (arr, n = 1) {
     return pageTitle;
   });
 
+  hexo.extend.helper.register("getSeriesInfo", function (seriesName) {
+    const seriesInfo = getFile(
+      path.join(hexo.base_dir, "assets-db/series.json"),
+      {},
+    );
+    return seriesInfo?.[seriesName] || {};
+  });
+
   hexo.extend.helper.register("getTranslationPage", function () {
     try {
       const page = this.page;
@@ -63,11 +71,11 @@ hexo.extend.helper.register("take", function (arr, n = 1) {
             ? "zh-CN"
             : "en";
       const categoriesInfo = getFile(
-        path.join(hexo.base_dir, "assets-db/assets-db/categories.json"),
+        path.join(hexo.base_dir, "assets-db/categories.json"),
         {},
       );
       const tagsInfo = getFile(
-        path.join(hexo.base_dir, "assets-db/assets-db/tags.json"),
+        path.join(hexo.base_dir, "assets-db/tags.json"),
         {},
       );
       let hasTranslatation = Object.keys(
