@@ -39,9 +39,7 @@ hexo clean && hexo serve
 
 Full documentation and examples:
 
-EN: https://lynanbreeze.github.io/hexo-theme-linen-doc/
-
-简体中文: https://lynanbreeze.github.io/hexo-theme-linen-doc-zh-CN/
+[EN](https://lynanbreeze.github.io/hexo-theme-linen-doc/) | [中文](https://lynanbreeze.github.io/hexo-theme-linen-doc-zh-CN/)
 
 ## License
 
