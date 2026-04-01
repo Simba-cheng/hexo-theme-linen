@@ -77,7 +77,7 @@ const version = theme.version;
     <div class="side-content">
       <% if (series.length) { %>
       <div class="post-series">
-        <a class="series-title" href="<%=url_for(`/series/${page.series}/`)%>"><%=__('common.series')%>-<%=page.series%></a>
+        <a class="series-title" href="<%=url_for(`/series/${page.series}/`)%>"><%=page.series%></a>
         <div class="series-items">
           <% take(series, 50).forEach((item, index) => { %>
           <a class="series-item-link<%-item.source === page.source ? ' active': ''%>" href="<%=url_for(item.path)%>"><%-`${item.title}`%><% if (item.subTitle) { %><span class="sub-title"><%=item.subTitle%></span><% } %></a>
