@@ -389,10 +389,11 @@ function handleClick(e) {
       }
       return;
     } else if (
-      target.className === "series-name" ||
-      target?.parentElement?.className === "series-name" ||
-      target.className === "series-name-content" ||
-      target?.parentElement?.className === "series-name-content"
+      target.tagName !== "H1" &&
+      (target.className === "series-name" ||
+        target?.parentElement?.className === "series-name" ||
+        target.className === "series-name-content" ||
+        target?.parentElement?.className === "series-name-content")
     ) {
       seriesElement?.classList?.add("visible");
       maskElement?.classList?.add("visible");

@@ -633,11 +633,19 @@ body {
           display: inline-block;
           width: 1em;
           height: 1em;
-          background-image: url("/img/icons/redirect.svg");
+          background-image: url("../img/icons/redirect.svg");
           background-size: cover;
           vertical-align: middle;
           margin-bottom: 0.25em;
         }
+      }
+    }
+  }
+
+  del {
+    a:not([class]):not(:has(.shared-link)) {
+      &::after {
+        display: none;
       }
     }
   }
@@ -1273,6 +1281,21 @@ body {
         &:nth-child(2) {
           margin-top: $postItemGap;
         }
+        .logo {
+          width: 36px;
+          height: 36px;
+          display: inline-block;
+          margin: 0;
+          vertical-align: middle;
+          border-radius: 1px;
+        }
+        .site-name {
+          margin-left: 10px;
+          display: inline-block;
+          line-height: 36px;
+          color: $darkText;
+          font-size: 18px;
+        }
         .author {
           display: flex;
           align-items: center;
@@ -1311,9 +1334,6 @@ body {
             text-align: center;
             color: #d8d8d8;
           }
-        }
-        &:last-child {
-          margin-bottom: 10px;
         }
       }
     }
@@ -1401,7 +1421,8 @@ body {
     }
     #post {
       margin: 0 auto;
-      padding: min(calc(3vw - 6px), 9px) $commonPadding;
+      padding: 0 $commonPadding;
+      padding-top: min(calc(3vw - 6px), 9px);
       h1:first-child {
         margin-top: 0;
       }
@@ -1424,6 +1445,28 @@ body {
       .gt-comment-date {
         font-size: 0.83em;
       }
+      .gt-comments {
+        padding-top: $commonPadding;
+        a:not([class]) {
+          color: $green;
+          font-weight: bold;
+          text-decoration: none;
+          &:after {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("../img/icons/redirect.svg");
+            background-size: cover;
+            vertical-align: middle;
+            margin-bottom: 0.25em;
+          }
+          &:hover {
+            opacity: 0.85;
+            border-bottom: solid 1px $green;
+          }
+        }
+      }
       .gt-comments-null {
         display: none;
       }
@@ -1438,13 +1481,19 @@ body {
       .gt-comment-username {
         color: $darkText;
       }
-      .gt-comment {
-        &:last-child {
-          padding-bottom: max(1.35em, min(3vw, 26px));
-        }
+      .user-mention {
+        color: $darkText;
+        text-decoration: underline;
+        @include defaultFont;
+        text-underline-offset: 0.2rem;
+        font-weight: 500;
+        font-size: 14px;
       }
       .user-mention {
         color: $darkText;
+      }
+      .gt-comments-controls {
+        margin-top: 0.625em;
       }
       .gt-link-counts {
         color: $darkText;
