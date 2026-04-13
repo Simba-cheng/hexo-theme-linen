@@ -207,6 +207,7 @@ const seriesInfo = getSeriesInfo(page?.series);
         distractionFreeMode: false,
         proxy: "<%=theme.comment.proxy%>",
         language: pageLanguage,
+        pagerDirection: "<%=theme.comment.pager_direction ?? 'last'%>"
       });
 
       gitalk.render("gitalk-container");
