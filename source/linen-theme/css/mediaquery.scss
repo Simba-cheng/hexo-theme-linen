@@ -240,9 +240,7 @@
       }
       .site-info {
         padding: 0;
-        &.home {
-          padding: 0;
-        }
+        padding-bottom: 1rem;
         .author {
           flex-direction: column;
           align-items: center;

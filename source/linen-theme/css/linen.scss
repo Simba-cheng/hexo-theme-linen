@@ -1675,7 +1675,7 @@ body {
 .series-nav {
   background-color: #f5f5f5;
   width: calc(100% - min(6vw, 30px));
-  margin: $postWidgetGap auto 1em auto;
+  margin: 0 auto 1em auto;
   padding: 1em;
   padding-top: 0.65em;
   border-radius: 2px;
@@ -2141,7 +2141,7 @@ html[lang="zh-CN"] {
 }
 
 #related-posts {
-  @include pageXPadding;
+  padding: 0 $commonPadding;
   border-top: solid 1px #f5f5f5;
   .related-posts-title {
     margin: 1em 0;
@@ -2545,5 +2545,10 @@ ul {
   display: inline-block;
   &:not(:first-child) {
     display: none;
+  }
+}
+.footnotes {
+  ol {
+    padding-left: calc(40px - $commonPadding);
   }
 }
