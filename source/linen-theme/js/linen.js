@@ -161,14 +161,30 @@ function copyToClipboard(text) {
   copyToClipboard(text);
 }
 
-function highlightAnchor(hash, highlightClass = "anchor-highlight") {
-  if (!hash) return;
-  const id = hash.replace(/^#/, "");
-  const el = document.getElementById(id);
-  if (el) {
-    el.classList.remove(highlightClass);
-    void el.offsetWidth;
-    el.classList.add(highlightClass);
+function highlightAnchor(
+  hash,
+  highlightClass = "anchor-highlight",
+  element = null,
+) {
+  if (element) {
+    element.classList.remove(highlightClass);
+    void element.offsetWidth;
+    element.classList.add(highlightClass);
+    setTimeout(() => {
+      element.classList.remove(highlightClass);
+    }, 4000);
+  } else {
+    if (!hash) return;
+    const id = hash.replace(/^#/, "");
+    const el = document.getElementById(id);
+    if (el) {
+      el.classList.remove(highlightClass);
+      void el.offsetWidth;
+      el.classList.add(highlightClass);
+      setTimeout(() => {
+      el.classList.remove(highlightClass);
+    }, 4000);
+    }
   }
 }
 
@@ -272,6 +288,34 @@ function handleClick(e) {
     var maskElement = document.getElementById("mask");
     var bodyElement = document.body;
     var donateModal = document.getElementById("donate-modal");
+    if(target?.className === 'footnote-href') {
+      const footNoteDefinitionId = target.getAttribute("href").substring(1);
+      const footNoteDefinitionElement = document.getElementById(footNoteDefinitionId);
+      if (footNoteDefinitionElement) {
+        footNoteDefinitionElement.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+        e.preventDefault();
+        highlightAnchor(undefined, undefined, footNoteDefinitionElement);
+        return;
+      }
+    }
+    if (target?.className === "footnote-backref") {
+      const footNoteId = target.getAttribute("href").substring(1);
+      const footNoteTextElements = document.querySelectorAll('.footnote-anchor-wrap');
+      if (footNoteTextElements.length) {
+        footNoteTextElements[0].scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+        e.preventDefault();
+        Array.prototype.forEach.call(footNoteTextElements, (el) => {
+          highlightAnchor(undefined, undefined, el);
+        })
+        return;
+      }
+    }
     if (/content-switch/.test(target.id)) {
       if (document.body.classList.contains("render-raw")) {
         target.innerText = target.dataset.rawcontentlabel;
