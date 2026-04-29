@@ -19,7 +19,8 @@
       }
     }
   </script>
-  <img id="postCoverImg" class="cover-img" src="<%=url_for(page.cover)%>" alt="" onload="onPostCoverImgLoaded(this)" />
+  <%# CUSTOM MODIFICATION: 使用 getAssetPath 替代 url_for，支持文章同目录资源路径 %>
+  <img id="postCoverImg" class="cover-img" src="<%=getAssetPath(page.cover, page)%>" alt="" onload="onPostCoverImgLoaded(this)" />
   <% if(page.coverInfo) { %>
   <div class="cover-info">
     <% if(page.coverInfo.url) { %>

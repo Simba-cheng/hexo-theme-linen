@@ -12,8 +12,9 @@
   <% topPosts.forEach(post => { %>
   <a class="post-item" href="<%=url_for(post.path)%>">
     <div class="item-body">
+      <%# CUSTOM MODIFICATION: 使用 getAssetPath 替代 url_for，支持文章同目录资源路径 %>
       <div class="cover-img">
-        <img src="<%=url_for(post.thumbnail || post.cover)%>" alt="" />
+        <img src="<%=getAssetPath(post.thumbnail || post.cover, post)%>" alt="" />
       </div>
       <div class="title-excerpt">
         <div class="title"><%=post.title%><% if (post.subTitle) { %><span class="sub-title"><%=post.subTitle%></span><% } %></div>

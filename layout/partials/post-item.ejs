@@ -26,9 +26,10 @@
         <span class="read-time"><%-partial('partials/words', { post, count: false, readTime: true })%></span>
       </div>
     </div>
+    <%# CUSTOM MODIFICATION: 使用 getAssetPath 替代 url_for，支持文章同目录资源路径 %>
     <% if (post.thumbnail || post.cover) { %>
     <div class="cover-img">
-      <img src="<%=url_for(post.thumbnail || post.cover)%>" alt="" loading="lazy" />
+      <img src="<%=getAssetPath(post.thumbnail || post.cover, post)%>" alt="" loading="lazy" />
     </div>
     <% } %>
   </div>
