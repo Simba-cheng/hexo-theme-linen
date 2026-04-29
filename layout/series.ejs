@@ -1,7 +1,7 @@
 <div class="series-layout">
   <% if (page.seriesInfo?.cover) { %>
   <div class="series-cover-img-wrap" style="<%=page.seriesInfo?.coverPlaceholder ? `background-image: url(${page.seriesInfo?.coverPlaceholder})`: ''%>">
-    <%# CUSTOM: 通过 coverRatio 前言变量支持自定义封面宽高比（如 coverRatio: 16:9），不设则保持默认 21:9；注意必须用 <%- 而非 <%=，否则引号会被转义为 &#34; 导致浏览器无法解析 style 属性 %>
+    <%# CUSTOM: 通过 coverRatio 前言变量支持自定义封面宽高比（如 coverRatio: 16:9），不设则保持默认 21:9；注意必须使用 unescaped 输出，否则引号会被转义为 HTML 实体导致 style 属性失效 %>
     <div class="series-cover-img-placeholder"<%- page.seriesInfo?.coverRatio ? ` style="padding-top:${(page.seriesInfo.coverRatio.split(':')[1]/page.seriesInfo.coverRatio.split(':')[0]*100).toFixed(2)}%"` : '' %>></div>
     <script>
       const coverImgStartTime = Date.now();

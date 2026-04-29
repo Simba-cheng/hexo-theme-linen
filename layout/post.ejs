@@ -1,6 +1,6 @@
 <% if (page.cover) { %>
 <div class="post-cover-img-wrap">
-  <%# CUSTOM: 通过 coverRatio 前言变量支持自定义封面宽高比（如 coverRatio: 16:9），不设则保持默认 21:9；注意必须用 <%- 而非 <%=，否则引号会被转义为 &#34; 导致浏览器无法解析 style 属性 %>
+  <%# CUSTOM: 通过 coverRatio 前言变量支持自定义封面宽高比（如 coverRatio: 16:9），不设则保持默认 21:9；注意必须使用 unescaped 输出，否则引号会被转义为 HTML 实体导致 style 属性失效 %>
   <div class="post-cover-img-placeholder"<%- page.coverRatio ? ` style="padding-top:${(page.coverRatio.split(':')[1]/page.coverRatio.split(':')[0]*100).toFixed(2)}%"` : '' %>></div>
   <div class="post-cover-img-placeholder-after"></div>
   <script>
