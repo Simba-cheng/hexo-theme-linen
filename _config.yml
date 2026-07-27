@@ -1,3 +1,5 @@
+version: 1.0.0
+
 stylesheets:
 - /linen-theme/css/linen.css
 - /linen-theme/css/mediaquery.css

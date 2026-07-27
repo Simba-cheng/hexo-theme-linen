@@ -224,3 +224,48 @@ hexo.extend.helper.register("take", function (arr, n = 1) {
 
     return toc;
   });
+
+  // ========== CUSTOM MODIFICATION START ==========
+  // 功能：处理文章资源路径（封面图等）
+  // 说明：如果是简单文件名（非绝对路径/外部链接），自动查找文章同目录资源
+  // 用法：cover: image.png 会自动解析为文章同目录下的图片
+  // 修改时间：2026-04-29
+  hexo.extend.helper.register("getAssetPath", function (assetPath, page) {
+    if (!assetPath) return assetPath;
+
+    // 如果是绝对路径或外部链接，直接返回
+    if (/^(\/|http|\/\/)/.test(assetPath)) {
+      return this.url_for(assetPath);
+    }
+
+    // 尝试查找文章同目录资源
+    if (page && page.path) {
+      const PostAsset = hexo.model('PostAsset');
+      const pagePath = page.path.replace(/\/$/, ''); // 移除末尾斜杠
+
+      // 尝试多种路径格式
+      const possibleIds = [
+        `source/${pagePath}/${assetPath}`,
+        `source/_posts/${assetPath}`,
+      ];
+
+      // 如果是文章，尝试基于 source 查找
+      if (page.source) {
+        const sourceDir = page.source.replace(/\.md$/, '');
+        possibleIds.unshift(`${sourceDir}/${assetPath}`);
+      }
+
+      for (const id of possibleIds) {
+        const asset = PostAsset.findById(id);
+        if (asset) {
+          return this.url_for(asset.path);
+        }
+      }
+
+      // 没找到资源，拼接文章路径
+      return this.url_for(`${pagePath}/${assetPath}`);
+    }
+
+    return this.url_for(assetPath);
+  });
+  // ========== CUSTOM MODIFICATION END ==========

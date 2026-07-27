@@ -135,8 +135,10 @@ function isElementInViewport(el) {
 }
 
 function copyToClipboard(text) {
+  // 自替换函数：首次调用时根据浏览器支持切换实现，
+  // 覆盖后的函数必须接收 text 参数，否则闭包会固化为首次传入的值
   if (navigator.clipboard) {
-    copyToClipboard = function () {
+    copyToClipboard = function (text) {
       navigator.clipboard
         .writeText(text)
         .then(() => {})
@@ -145,7 +147,7 @@ function copyToClipboard(text) {
         });
     };
   } else {
-    copyToClipboard = function () {
+    copyToClipboard = function (text) {
       const textArea = document.createElement("textarea");
       textArea.value = text;
       document.body.appendChild(textArea);

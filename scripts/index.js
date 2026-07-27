@@ -6,7 +6,7 @@ require("./hoverTexts")(hexo);
 require("./helpers/tools")(hexo);
 require("./font-version")(hexo);
 require("./footnote")(hexo);
-require("./appendRawMarkdownContent")(hexo); 
+require("./appendRawMarkdownContent")(hexo);
 require("./addCopyButtonToCodeBlocks")(hexo);
 require('./folded-code-block')(hexo);
 require('./series-generator')(hexo);

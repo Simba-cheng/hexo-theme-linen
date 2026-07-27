@@ -15,26 +15,12 @@
   unicode-range: U+4E00-9FFF;
 }
 @font-face {
-  font-family: "LXGWWenKai";
-  font-display: swap;
-  src: url("../fonts/LXGWWenKai-Regular.woff2?v=#{$font-version}") format("woff2");
-  font-display: swap;
-  unicode-range: U+4E00-9FFF;
-}
-
-@font-face {
   font-family: "source-serif";
   src: url("../fonts/SourceSerif4-Regular.ttf.woff2?v=#{$font-version}")
     format("woff2");
   unicode-range:
     U+0-7F, U+A0, U+B7, U+200A, U+2014, U+2018, U+2019, U+201C, U+201D, U+2022,
     U+2026, U+00B0, U+0043;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Source Sans Pro";
-  src: url("../fonts/Source-Sans-Pro-Regular-2.woff2?v=#{$font-version}")
-    format("woff2");
   font-display: swap;
 }
 
@@ -2550,5 +2536,34 @@ ul {
 .footnotes {
   ol {
     padding-left: calc(40px - $commonPadding);
+  }
+}
+
+// 转载文章标识
+.repost-badge {
+  font-size: 13px;
+  color: #9e8a7a;
+  border: 1px solid #e0d5c7;
+  border-radius: 3px;
+  padding: 1px 5px;
+  margin-left: 0.5em;
+  vertical-align: middle;
+  white-space: nowrap;
+  font-weight: normal;
+}
+
+#post-repost-notice {
+  font-size: 14px;
+  border-left: solid 2px #d4b896;
+  margin-top: 12px;
+  background-color: #faf8f5;
+  padding: 8px 12px;
+  color: #8b7355;
+  a {
+    color: #8b7355;
+    text-decoration: underline;
+    &:hover {
+      opacity: 0.7;
+    }
   }
 }

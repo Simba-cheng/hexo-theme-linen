@@ -118,7 +118,7 @@ const version = theme.version;
   </script>
   <% } %>
   <% if (page.hdrSwitch) { %>
-  <script src="<%url_for(`/linen-theme/js/hdr.js?v=${version}`)%>"></script>
+  <script src="<%=url_for(`/linen-theme/js/hdr.js?v=${version}`)%>"></script>
   <% } %>
   <% if (theme?.appends?.length > 0) { %>
   <% theme.appends.forEach(appendItem => { %>
