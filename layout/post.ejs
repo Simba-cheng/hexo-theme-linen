@@ -342,8 +342,11 @@ const seriesInfo = getSeriesInfo(page?.series);
     }
     return '';
   }
+  // const captionPlugin = new PhotoSwipeDynamicCaption(lightbox, {
+  //   type: 'auto',
+  // });
   const captionPlugin = new PhotoSwipeDynamicCaption(lightbox, {
-    type: 'auto',
+    type: 'below',
   });
 
   const escapeHtml = (value) => String(value || '').replace(/[&<>"']/g, (char) => ({

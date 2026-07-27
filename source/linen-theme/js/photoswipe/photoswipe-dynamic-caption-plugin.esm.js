@@ -193,11 +193,14 @@ class PhotoSwipeDynamicCaption {
       );
       this.setCaptionWidth(this.captionElement, false);
     } else if (slide.dynamicCaptionType === 'below') {
-      this.setCaptionPosition(
-        this.pswp.currSlide.bounds.center.x,
-        this.pswp.currSlide.bounds.center.y + imageHeight
-      );
-      this.setCaptionWidth(this.captionElement, imageWidth);
+      // this.setCaptionPosition(
+      //   this.pswp.currSlide.bounds.center.x,
+      //   this.pswp.currSlide.bounds.center.y + imageHeight
+      // );
+      this.captionElement.style.left = '50%';
+      this.captionElement.style.transform = 'translateX(-50%)';
+      this.captionElement.style.top = (this.pswp.currSlide.bounds.center.y + imageHeight) + 'px';
+      this.setCaptionWidth(this.captionElement, false);
     }
   }
 
@@ -266,7 +269,8 @@ class PhotoSwipeDynamicCaption {
         // do nothing, caption will fit aside without any adjustments
       }
     } else if (slide.dynamicCaptionType === 'below') {
-      this.setCaptionWidth(this.tempCaption, imageWidth);
+      // this.setCaptionWidth(this.tempCaption, imageWidth);
+      this.setCaptionWidth(this.tempCaption, false);
       this.tempCaption.innerHTML = this.getCaptionHTML(e.slide);
       const captionHeight = this.tempCaption.getBoundingClientRect().height;
 
