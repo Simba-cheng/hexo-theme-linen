@@ -228,6 +228,18 @@
 /* ---------- 多列内部：一天 = 一列 ---------- */
 .tl-day {
   min-width: 0;
+  /* hover 时整列浮现为卡片：淡底 + 细边 + 底部阴影，与单列纵向的 hover 语言一致。
+     padding 与负 margin 抵消，内边距预留在静止态就存在，hover 只换背景/边框/阴影，零位移不跳动。 */
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin: -10px -12px;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+.tl-day:hover {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: #d7dce3;
+  box-shadow: 0 6px 18px rgba(35, 35, 35, 0.08);
 }
 .tl-day-head {
   display: flex;
