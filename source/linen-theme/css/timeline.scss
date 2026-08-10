@@ -1,0 +1,305 @@
+/*
+ * 旅行时间轴 Timeline（自包含组件样式）
+ * 由 scripts/timeline.js 的 after_render:html 过滤器按需注入：
+ * 只有页面里出现 class="tl" 时才加载本文件。
+ *
+ * 两种形态共用同一套 .tl- 前缀，避免污染主题其它样式：
+ *   1. 多列按天排程：.tl--2 / .tl--3 / .tl--4（列 = 天，表头 = 日期）
+ *   2. 单列纵向时间轴：.tl-item + .tl-dot + .tl-card
+ */
+.tl {
+  /* 配色跟随主题：绿 #0f730c / 蓝 #0066cc / 墨 #232323 / 灰 #6b7280 */
+  --tl-line: #e3e8ef;
+  --tl-ink: #232323;
+  --tl-muted: #6b7280;
+  --tl-green: #0f730c;
+  --tl-blue: #0066cc;
+  --tl-card: #ffffff;
+  --tl-edge: #edf0f4;
+  --tl-mono:
+    ui-monospace, SFMono-Regular, Menlo, Consolas, "Courier New", monospace;
+  margin: 24px 0 10px;
+}
+
+/* ---------- 多列：网格 = 天 ---------- */
+.tl--2,
+.tl--3,
+.tl--4 {
+  display: grid;
+  gap: 26px;
+  align-items: start;
+}
+.tl--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.tl--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.tl--4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+@media (max-width: 1200px) {
+  .tl--4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 860px) {
+  .tl--2,
+  .tl--3,
+  .tl--4 {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* ---------- 单列纵向：item + dot + card ---------- */
+.tl-item {
+  position: relative;
+  padding: 0 0 22px 42px;
+}
+.tl-item::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  background: var(--tl-line);
+}
+.tl-item:last-child::before {
+  bottom: auto;
+  height: 26px;
+}
+.tl-dot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--tl-card);
+  border: 2px solid var(--tl-green);
+  color: var(--tl-green);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+  box-shadow: 0 0 0 3px rgba(15, 115, 12, 0.1);
+  box-sizing: border-box;
+}
+.tl-card {
+  background: var(--tl-card);
+  border: 1px solid var(--tl-edge);
+  border-radius: 10px;
+  padding: 14px 18px;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.tl-item:hover .tl-card {
+  border-color: #d7dce3;
+  box-shadow: 0 3px 14px rgba(35, 35, 35, 0.07);
+}
+.tl-card-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.tl-date {
+  font-weight: 600;
+  color: var(--tl-ink);
+  font-size: 15px;
+}
+.tl-tag {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: nowrap;
+  vertical-align: middle;
+  background: var(--tl-blue);
+  color: #fff;
+}
+.tl-tag--green {
+  background: var(--tl-green);
+}
+.tl-tag--blue {
+  background: var(--tl-blue);
+}
+.tl-tag--orange {
+  background: #c46a1a;
+}
+.tl-tag--red {
+  background: #c0392b;
+}
+.tl-tag--gray {
+  background: #6b7280;
+}
+.tl-card-title {
+  margin: 4px 0 8px;
+  font-weight: 600;
+}
+.tl-schedule {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 7px;
+}
+.tl-schedule li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: baseline;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #333;
+}
+.tl-schedule time {
+  flex: 0 0 auto;
+  min-width: 52px;
+  font-family: var(--tl-mono);
+  font-size: 12.5px;
+  color: var(--tl-muted);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.tl-schedule em {
+  font-style: normal;
+  font-size: 12.5px;
+  color: var(--tl-muted);
+}
+.tl-schedule--2col {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (max-width: 860px) {
+  .tl-schedule--2col {
+    grid-template-columns: 1fr;
+  }
+}
+.tl-note {
+  margin-top: 10px;
+  padding: 8px 10px;
+  font-size: 13px;
+  color: var(--tl-muted);
+  background: #f7f8fa;
+  border-radius: 8px;
+  border-left: 3px solid var(--tl-blue);
+}
+.tl-legend {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  font-size: 12.5px;
+  color: var(--tl-muted);
+}
+.tl-legend li {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.tl-legend i {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  display: inline-block;
+}
+.tl-legend i.lg-green {
+  background: var(--tl-green);
+}
+.tl-legend i.lg-blue {
+  background: var(--tl-blue);
+}
+.tl-legend i.lg-orange {
+  background: #c46a1a;
+}
+.tl-legend i.lg-red {
+  background: #c0392b;
+}
+.tl-legend i.lg-gray {
+  background: #6b7280;
+}
+
+/* ---------- 多列内部：一天 = 一列 ---------- */
+.tl-day {
+  min-width: 0;
+}
+.tl-day-head {
+  display: flex;
+  align-items: center;
+  gap: 6px 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.tl-day-num {
+  font-weight: 700;
+  font-size: 15.5px;
+  color: var(--tl-ink);
+}
+.tl-day-date {
+  font-size: 12.5px;
+  color: var(--tl-muted);
+  font-family: var(--tl-mono);
+  font-variant-numeric: tabular-nums;
+}
+.tl-ev {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 9px 12px;
+  border-left: 3px solid var(--tl-edge);
+  border-radius: 8px;
+  background: var(--tl-card);
+  margin-bottom: 8px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.tl-ev:hover {
+  transform: translateX(2px);
+  box-shadow: 0 2px 8px rgba(35, 35, 35, 0.06);
+}
+.tl-ev time {
+  flex: 0 0 auto;
+  min-width: 52px;
+  font-family: var(--tl-mono);
+  font-size: 12.5px;
+  color: var(--tl-muted);
+  text-align: right;
+  line-height: 1.6;
+  padding-top: 2px;
+  font-variant-numeric: tabular-nums;
+}
+.tl-ev-main {
+  flex: 1;
+  min-width: 0;
+}
+.tl-ev-title {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--tl-ink);
+}
+.tl-ev-sub {
+  margin-top: 3px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--tl-muted);
+}
+.tl-ev--trans {
+  border-left-color: var(--tl-green);
+}
+.tl-ev--eat {
+  border-left-color: #c46a1a;
+}
+.tl-ev--hotel {
+  border-left-color: var(--tl-blue);
+}
+.tl-ev--sight {
+  border-left-color: #c0392b;
+}
+.tl-ev--other {
+  border-left-color: #6b7280;
+}
