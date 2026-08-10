@@ -1,0 +1,18 @@
+<article id="page" class="travel-page">
+  <h1><%=page.title%></h1>
+  <%-page.content%>
+</article>
+
+<div class="posts-info-layout">
+  <div class="posts-wrap">
+    <div id="recent-posts">
+      <%
+      site.posts.filter(post => post.tags && post.tags.some(tag => tag.name === '东晃西游')).sort('date', -1).each(post => {
+      %>
+      <%-partial('partials/post-item', { post: post })%>
+      <% }); %>
+    </div>
+    <%-partial('partials/paginator')%>
+  </div>
+  <div class="info-wrap"><%-partial('partials/site-info')%></div>
+</div>
