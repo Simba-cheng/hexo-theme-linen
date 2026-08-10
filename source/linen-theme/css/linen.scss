@@ -3672,3 +3672,24 @@ ul {
     }
   }
 }
+
+// 旅行状态标识（准备晃 / 已晃完）：徽章配色跟随主题绿蓝
+.travel-badge {
+  font-size: 13px;
+  border-radius: 999px;
+  padding: 1px 8px;
+  margin-left: 0.5em;
+  vertical-align: middle;
+  white-space: nowrap;
+  font-weight: normal;
+}
+.travel-badge--plan {
+  color: #0066cc;
+  border: 1px solid rgba(0, 102, 204, 0.35);
+  background: rgba(0, 102, 204, 0.1);
+}
+.travel-badge--done {
+  color: #0f730c;
+  border: 1px solid rgba(15, 115, 12, 0.35);
+  background: rgba(15, 115, 12, 0.1);
+}

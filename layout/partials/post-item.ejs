@@ -7,7 +7,7 @@
     <% } %>
     <div class="title-excerpt">
       <div class="title-excerpt-text">
-        <a class="title" href="<%=url_for(post.path)%>" onclick="event.stopPropagation()"><%=post.title%><% if (post.subTitle) { %><span class="sub-title"><%=post.subTitle%></span><% } %></a><% if (post.repost) { %><span class="repost-badge">转载</span><% } %>
+        <a class="title" href="<%=url_for(post.path)%>" onclick="event.stopPropagation()"><%=post.title%><% if (post.subTitle) { %><span class="sub-title"><%=post.subTitle%></span><% } %></a><% if (post.repost) { %><span class="repost-badge">转载</span><% } %><% if (post.travel_status) { %><span class="travel-badge travel-badge--<%=post.travel_status === '准备晃' ? 'plan' : 'done'%>"><%=post.travel_status%></span><% } %>
         <% if(post?.tags?.length) { %>
           <div class="tags">
             <% (post.tags || []).forEach(tag => { %>

@@ -7,7 +7,7 @@
   <div class="posts-wrap">
     <div id="recent-posts">
       <%
-      site.posts.filter(post => post.tags && post.tags.some(tag => tag.name === '东晃西游')).sort('date', -1).each(post => {
+      site.posts.filter(post => post.travel_status === '准备晃' || post.travel_status === '已晃完').sort('date', -1).each(post => {
       %>
       <%-partial('partials/post-item', { post: post })%>
       <% }); %>

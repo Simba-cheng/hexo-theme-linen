@@ -42,7 +42,7 @@
 <% } %>
 
 <article id="post" class="article">
-  <h1 class="post-title"><%=page.title%><% if (page.subTitle) { %><span class="sub-title"><%=page.subTitle%></span><% } %></h1>
+  <h1 class="post-title"><%=page.title%><% if (page.subTitle) { %><span class="sub-title"><%=page.subTitle%></span><% } %><% if (page.travel_status) { %><span class="travel-badge travel-badge--<%=page.travel_status === '准备晃' ? 'plan' : 'done'%>"><%=page.travel_status%></span><% } %></h1>
   <div class="post-meta">
     <% if (page.date && !date(page.date).startsWith('1970')) { %>
     <time class="date" datetime="<%=page.date.toJSON()%>">

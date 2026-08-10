@@ -17,7 +17,7 @@
         <img src="<%=getAssetPath(post.thumbnail || post.cover, post)%>" alt="" />
       </div>
       <div class="title-excerpt">
-        <div class="title"><%=post.title%><% if (post.subTitle) { %><span class="sub-title"><%=post.subTitle%></span><% } %><% if (post.repost) { %><span class="repost-badge">转载</span><% } %></div>
+        <div class="title"><%=post.title%><% if (post.subTitle) { %><span class="sub-title"><%=post.subTitle%></span><% } %><% if (post.repost) { %><span class="repost-badge">转载</span><% } %><% if (post.travel_status) { %><span class="travel-badge travel-badge--<%=post.travel_status === '准备晃' ? 'plan' : 'done'%>"><%=post.travel_status%></span><% } %></div>
         <div class="excerpt"><%=post?.excerpt||''%></div>
         <div class="post-meta">
           <time class="date" datetime="<%=post.date.toJSON()%>">
