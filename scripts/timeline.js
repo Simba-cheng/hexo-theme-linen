@@ -1,5 +1,8 @@
 "use strict";
 
+const fs = require("fs");
+const path = require("path");
+
 /**
  * hexo-theme-linen 旅行时间轴组件
  *
@@ -12,6 +15,9 @@
  *   - 时间 | 正文 | 备注 | 类别  当天项目（备注、类别可省；
  *                                 类别：trans 交通 / eat 用餐 / hotel 住宿 / sight 游玩 / other 其他）
  *   > 备注                    当天级备注（可省）
+ *
+ * 时间字段：写精确时刻（08:00）渲染为等宽数字；写时段（上午/下午/晚上）自动渲染为胶囊标签，
+ *           适合只知先后、没有确切时间的日程。连续相同的时段自动合并为一个胶囊（后续行留空对齐）。
  *
  * 注意事项：
  *   - 正文里想用竖线，写成 \| 转义（或全角 ｜）
@@ -123,9 +129,16 @@ function renderVertical(days) {
     .map((d, i) => {
       const title = d.date ? `${esc(d.name)} · ${esc(d.date)}` : esc(d.name);
       const rows = d.items
-        .map(it => {
+        .map((it, idx) => {
           const note = it.note ? `<em>${esc(it.note)}</em>` : "";
-          return `<li><time>${esc(it.time)}</time><span>${esc(it.text)}</span>${note}</li>`;
+          const isPeriod = it.time && !/^\d/.test(it.time);
+          // 连续相同的时段合并为一个胶囊：后续行时间列留空，正文对齐到胶囊右侧。
+          // 只并"连续且相同"（上午→下午→上午 是三个独立块，各自保留）；精确时刻不并。
+          const merged = isPeriod && idx > 0 && d.items[idx - 1].time === it.time;
+          const timeHtml = merged
+            ? "<time></time>"
+            : `<time${isPeriod ? ' class="tl-time--period"' : ""}>${esc(it.time)}</time>`;
+          return `<li>${timeHtml}<span>${esc(it.text)}</span>${note}</li>`;
         })
         .join("");
       const note = d.note ? `<div class="tl-note">${esc(d.note)}</div>` : "";
@@ -160,7 +173,15 @@ hexo.extend.filter.register("after_render:html", function (html) {
   if (!html || html.indexOf('class="tl') === -1) return html;
   if (html.indexOf("/linen-theme/css/timeline.css") !== -1) return html; // 已注入过
 
-  const version = (hexo.theme && hexo.theme.config && hexo.theme.config.version) || "1";
+  // 缓存版本号 = timeline.scss 的修改时间：CSS 一改 URL 就变，浏览器不会沿用旧样式
+  let version = "1";
+  try {
+    const themeDir = hexo.theme_dir || path.join(hexo.base_dir, "themes", hexo.config.theme || "");
+    const scss = path.join(themeDir, "source", "linen-theme", "css", "timeline.scss");
+    version = String(fs.statSync(scss).mtimeMs);
+  } catch (e) {
+    version = (hexo.theme && hexo.theme.config && hexo.theme.config.version) || "1";
+  }
   const href =
     (hexo.config.root || "/") + "linen-theme/css/timeline.css?v=" + version;
   const link = `<link rel="stylesheet" href="${href}">`;

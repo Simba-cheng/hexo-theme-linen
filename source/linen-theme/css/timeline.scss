@@ -166,6 +166,19 @@
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
+/* 时段标签（上午/下午/晚上…）：以浅蓝胶囊区分于精确时刻 */
+.tl-schedule time.tl-time--period {
+  font-family: inherit;
+  min-width: 52px;
+  padding: 1px 10px;
+  box-sizing: border-box;
+  text-align: center;
+  font-weight: 600;
+  color: var(--tl-blue);
+  background: rgba(0, 102, 204, 0.1);
+  border: 1px solid rgba(0, 102, 204, 0.28);
+  border-radius: 999px;
+}
 .tl-schedule em {
   font-style: normal;
   font-size: 12.5px;
