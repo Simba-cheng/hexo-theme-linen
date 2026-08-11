@@ -19,6 +19,9 @@ const path = require("path");
  * 时间字段：写精确时刻（08:00）渲染为等宽数字；写时段（上午/下午/晚上）自动渲染为胶囊标签，
  *           适合只知先后、没有确切时间的日程。连续相同的时段自动合并为一个胶囊（后续行留空对齐）。
  *
+ * 多列模式（{% timeline N %}）下，每项都包一层 .tl-group，左边条统一为 3px 直条；
+ *   连续"同一时段 + 同一 type"的项共用一个连续直条（合并），卡片本身保持独立；精确时刻不合并。
+ *
  * 注意事项：
  *   - 正文里想用竖线，写成 \| 转义（或全角 ｜）
  *   - 不要写 {% 或 {{（会被当作 Hexo 模板语法）
@@ -85,14 +88,42 @@ function parse(content) {
   return days;
 }
 
-function catClass(cat) {
-  return CATS.includes(cat) ? `tl-ev--${cat}` : "tl-ev--other";
+/* 类别修饰类：--sight 等，拼在 .tl-group 上（如 .tl-group--sight） */
+function catMod(cat) {
+  return CATS.includes(cat) ? `--${cat}` : "--other";
 }
 
 /* 取名称里第一个数字做圆点序号（如「DAY 2」→ 2、「D3」→ 3），没有数字则按第 N 天 */
 function dotNumber(name, index) {
   const m = String(name).match(/(\d+)/);
   return m ? m[1] : String(index + 1);
+}
+
+/*
+ * 多列合并：把"同一时段 + 同一 type"的连续项并成一组，组内共用一个左边条（括号）。
+ *   只并时段（上午/下午/晚上，非数字开头）；精确时刻不并；隔开的相同项也不并。
+ */
+function groupColumnItems(items) {
+  const groups = [];
+  let cur = [];
+  items.forEach(it => {
+    const isPeriod = it.time && !/^\d/.test(it.time);
+    const prev = cur.length ? cur[cur.length - 1] : null;
+    if (isPeriod && prev && prev.time === it.time && prev.cat === it.cat) {
+      cur.push(it);
+    } else {
+      if (cur.length) groups.push(cur);
+      cur = [it];
+    }
+  });
+  if (cur.length) groups.push(cur);
+  return groups;
+}
+
+/* 渲染单条卡片；showTime 为 false 时时间留空（合并组内第一项才显示时段） */
+function renderColumnItem(it, showTime) {
+  const sub = it.note ? `<div class="tl-ev-sub">${esc(it.note)}</div>` : "";
+  return `<div class="tl-ev"><time>${showTime ? esc(it.time) : ""}</time><div class="tl-ev-main"><div class="tl-ev-title">${esc(it.text)}</div>${sub}</div></div>`;
 }
 
 /* ---------- 多列按天排程 ---------- */
@@ -103,10 +134,11 @@ function renderColumns(days, cols) {
 
   const body = days
     .map(d => {
-      const items = d.items
-        .map(it => {
-          const sub = it.note ? `<div class="tl-ev-sub">${esc(it.note)}</div>` : "";
-          return `<div class="tl-ev ${catClass(it.cat)}"><time>${esc(it.time)}</time><div class="tl-ev-main"><div class="tl-ev-title">${esc(it.text)}</div>${sub}</div></div>`;
+      const items = groupColumnItems(d.items)
+        .map(g => {
+          // 单条和合并组统一包一层 .tl-group：直条（左边条）都由它提供
+          const rows = g.map((it, i) => renderColumnItem(it, i === 0)).join("");
+          return `<div class="tl-group tl-group${catMod(g[0].cat)}">${rows}</div>`;
         })
         .join("");
       const note = d.note ? `<div class="tl-note">${esc(d.note)}</div>` : "";
