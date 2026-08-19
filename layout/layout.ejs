@@ -49,13 +49,35 @@ const version = theme.version;
   <div id=" "></div>
   <div id="page-top"></div>
   <%-partial('partials/header', {
-      hasTocs: page?.toc ?? !!tocs?.length
+      hasTocs: page?.toc ?? (!!tocs?.length || page.layout === 'quotes')
     })%> <% if (is_post()) { %>
   <div class="banner-bg"></div>
   <% } %>
   <div id="safe-area-test" style="position: fixed; bottom: 0; height: env(safe-area-inset-bottom);"></div>
   <div class="page-body">
     <div class="side-content">
+      <% if (page.layout === 'quotes') {
+        const quotePoems = site.pages.filter(p => p.layout === 'poem').sort('date', -1);
+      %>
+      <div id="toc" class="toc quotes-toc">
+        <div class="toc-title"></div>
+        <div class="toc-items">
+          <div class="toc-item-wrap">
+            <a class="toc-item-link" data-id="摘录" href="#摘录">摘录</a>
+          </div>
+          <div class="toc-item-wrap">
+            <a class="toc-item-link" data-id="诗句" href="#诗句">诗句</a>
+            <% if (quotePoems.length) { %>
+            <ul class="toc-sub-item-wrap">
+              <% quotePoems.forEach(poem => { %>
+              <li><a class="quotes-toc-poem-link" href="<%=url_for(poem.path)%>"><%=poem.title%></a></li>
+              <% }); %>
+            </ul>
+            <% } %>
+          </div>
+        </div>
+      </div>
+      <% } %>
       <% if (page?.toc !== false && tocs?.length) { %>
       <div id="toc" class="toc<%=page.tocType === 'flat' ? ' flat' : ''%>">
         <div class="toc-title"></div>

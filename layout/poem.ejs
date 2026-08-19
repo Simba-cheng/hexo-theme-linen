@@ -1,0 +1,21 @@
+<%
+const poemMeta = [
+  page.author,
+  page.work,
+  page.type,
+  Array.isArray(page.tags) ? page.tags.join(' · ') : ''
+].filter(Boolean);
+%>
+<article id="page" class="poem-page">
+  <header class="poem-header">
+    <h1><%=page.title%></h1>
+    <% if (poemMeta.length) { %>
+    <div class="poem-meta"><%=poemMeta.join(' · ')%></div>
+    <% } %>
+    <a class="poem-back" href="<%=url_for('/东捡西拾/')%>">← 返回东捡西拾</a>
+  </header>
+
+  <div class="poem-body">
+    <%-page.content%>
+  </div>
+</article>

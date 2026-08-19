@@ -1,0 +1,61 @@
+<%
+const poems = site.pages.filter(p => p.layout === 'poem').sort('date', -1);
+const poemCount = poems.length;
+
+const poemGroups = {};
+poems.forEach(poem => {
+  const key = poem.date && !date(poem.date).startsWith('1970') ? date(poem.date, 'YYYY-MM-DD') : '未知日期';
+  (poemGroups[key] = poemGroups[key] || []).push(poem);
+});
+const poemDates = Object.keys(poemGroups).sort().reverse();
+let poemIndex = 0;
+%>
+<article id="page" class="quotes-page">
+  <h1><%=page.title%></h1>
+
+  <% if (page.description) { %>
+  <p class="quotes-desc"><%=page.description%></p>
+  <% } %>
+
+  <% if (poems.length) { %>
+  <section class="quotes-poems">
+    <div class="quotes-section-head">
+      <h2 id="诗句">诗句</h2>
+      <span class="quotes-section-count"><%=poemCount%> 首</span>
+    </div>
+    <p class="quotes-section-desc">单独成篇的诗句，点击可查看全文与解析。</p>
+
+    <div class="poem-timeline">
+      <% poemDates.forEach((dateKey, di) => { %>
+      <div class="poem-timeline-group<%=di === 0 ? ' is-first' : ''%>">
+        <div class="poem-timeline-date">
+          <span class="poem-timeline-dot"></span>
+          <span class="poem-timeline-label"><%=dateKey%></span>
+          <span class="poem-timeline-count"><%=poemGroups[dateKey].length%> 首</span>
+        </div>
+        <div class="poem-list">
+          <% poemGroups[dateKey].forEach((poem, i) => { poemIndex++; %>
+          <a class="poem-card" href="<%=url_for(poem.path)%>">
+            <span class="poem-card-index"><%=String(poemIndex).padStart(3, '0')%></span>
+            <span class="poem-card-body">
+              <span class="poem-card-title"><%=poem.title%></span>
+              <% if (poem.author || poem.work) { %>
+              <span class="poem-card-source"><%=[poem.author, poem.work].filter(Boolean).join(' · ')%></span>
+              <% } %>
+            </span>
+            <% if (poem.excerpt) { %>
+            <span class="poem-card-excerpt"><%=poem.excerpt%></span>
+            <% } %>
+          </a>
+          <% }); %>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+  </section>
+  <% } %>
+
+  <div class="quotes-intro">
+    <%-page.content%>
+  </div>
+</article>
