@@ -49,7 +49,7 @@ const version = theme.version;
   <div id=" "></div>
   <div id="page-top"></div>
   <%-partial('partials/header', {
-      hasTocs: page?.toc ?? (!!tocs?.length || page.layout === 'quotes')
+      hasTocs: page?.toc ?? (!!tocs?.length || page.layout === 'quotes' || page.layout === 'poem')
     })%> <% if (is_post()) { %>
   <div class="banner-bg"></div>
   <% } %>
@@ -77,6 +77,29 @@ const version = theme.version;
           </div>
         </div>
       </div>
+      <% } %>
+      <% if (page.layout === 'poem') {
+        const poemTocs = extractTocFromHtml(page.content);
+      %>
+      <% if (poemTocs.length) { %>
+      <div id="toc" class="toc poem-toc">
+        <div class="toc-title"></div>
+        <div class="toc-items">
+          <% poemTocs.forEach((toc, index) => { %>
+          <div class="toc-item-wrap">
+            <a class="toc-item-link" data-id="<%-toc.id%>" href="#<%-toc.id%>"><%-toc.title%></a>
+            <% if(toc?.children?.length) { %>
+            <ul class="toc-sub-item-wrap">
+              <% toc.children.forEach(subItem => { %>
+              <li><a class="toc-sub-item-link" data-id="<%-subItem.id%>" href="#<%-subItem.id%>"><%-subItem.title%></a></li>
+              <% }); %>
+            </ul>
+            <% }; %>
+          </div>
+          <% }); %>
+        </div>
+      </div>
+      <% } %>
       <% } %>
       <% if (page?.toc !== false && tocs?.length) { %>
       <div id="toc" class="toc<%=page.tocType === 'flat' ? ' flat' : ''%>">
@@ -135,7 +158,7 @@ const version = theme.version;
   <div id="mask"></div>
   <a id="back-to-top" href="# " title="back to top"></a>
   <noscript id="noscript-styles"></noscript>
-  <% if(is_post()) { %>
+  <% if(is_post() || page.layout === 'poem') { %>
   <script src="<%=url_for(`/linen-theme/js/toc.js?v=${version}`)%>" defer></script>
   <% } %>
   <% if (theme.scripts !== undefined && theme.scripts.length > 0) { %>

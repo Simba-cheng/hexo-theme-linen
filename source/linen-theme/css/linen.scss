@@ -3764,7 +3764,7 @@ ul {
 }
 
 /* 东捡西拾左侧目录：静态展示，不依赖 toc.js 的滚动高亮 */
-.quotes-toc {
+#toc.quotes-toc {
   .toc-item-wrap:not(.active) {
     opacity: 1;
   }
@@ -3784,6 +3784,17 @@ ul {
     &:hover {
       color: #777;
     }
+  }
+}
+
+/* 诗句详情页左侧目录：支持 toc.js 滚动高亮，三级目录常显 */
+#toc.poem-toc {
+  .toc-item-wrap:not(.active) {
+    opacity: 1;
+  }
+
+  .toc-sub-item-wrap {
+    display: block;
   }
 }
 
