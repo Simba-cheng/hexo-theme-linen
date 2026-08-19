@@ -3730,7 +3730,7 @@ ul {
       }
     }
 
-    p:last-child {
+    p:last-child:not(:first-child) {
       text-align: right;
       color: #8b8178;
       font-size: 13px;
